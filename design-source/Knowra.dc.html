@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Knowra — case study</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#F4F2EE;color:#16181D;font-family:'Geist',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#0F6E6E}a:hover{color:#0B5252}
+h1,h2,h3,h4,p,ul{margin:0}
+.navlink{color:#3A3D44;text-decoration:none}.navlink:hover{color:#16181D}
+.btn-dark:hover{background:#2A2E36 !important}
+.btn-line:hover{border-color:#16181D !important}
+.arrow{text-decoration:none;font-weight:500}.arrow:hover{text-decoration:underline;text-underline-offset:4px}
+.onDark{color:#FFFFFF;text-decoration:none}.onDark:hover{color:#9FD8D0}
+.lift{transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease}
+.lift:hover{transform:translateY(-6px);box-shadow:0 24px 48px -28px rgba(15,17,21,.35);border-color:#C4BFB5 !important}
+@media (prefers-reduced-motion:reduce){.lift,.lift:hover{transition:none;transform:none}}
+:focus-visible{outline:2px solid #0F6E6E;outline-offset:3px;border-radius:4px}
+</style>
+</helmet>
+<div style="background: #F4F2EE; color: #16181D; min-height: 100vh">
+<div data-progress="bar" aria-hidden="true" style="position: fixed; top: 0; left: 0; right: 0; height: 3px; background: #0F6E6E; transform-origin: 0 50%; transform: scaleX(0); z-index: 30"></div>
+
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(244,242,238,0.9); backdrop-filter: blur(8px); border-bottom: 1px solid #DEDAD2">
+<nav aria-label="Primary" style="max-width: 1200px; margin: 0 auto; padding: 16px clamp(16px, 4vw, 40px); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+<a href="Main.dc.html" class="navlink" style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-weight: 500">← Ajeet Singh</a>
+<div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; font-size: 15px">
+<a href="https://github.com/Ajeeetsingh/enterprise_knowledge_assistant" target="_blank" rel="noopener" class="navlink">Code ↗</a>
+<a href="/_blob/8c8cd7279675f7c9fc6b705a7ad93c22" target="_blank" rel="noopener" class="btn-line" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border: 1px solid #C4BFB5; border-radius: 999px; color: #16181D; text-decoration: none; font-weight: 500">Résumé</a>
+</div>
+</nav>
+</header>
+
+<main>
+<!-- HERO -->
+<section style="max-width: 1200px; margin: 0 auto; padding: clamp(56px, 9vw, 112px) clamp(16px, 4vw, 40px) clamp(48px, 6vw, 72px)">
+<p data-reveal="fade" style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: #63666D">Case study · Personal project · 2026 – present</p>
+<h1 data-reveal="up" data-reveal-delay="100" style="margin-top: 24px; font-size: clamp(48px, 7vw, 96px); line-height: 1; letter-spacing: -0.04em; font-weight: 600">Knowra</h1>
+<p data-reveal="up" data-reveal-delay="220" style="margin-top: 28px; max-width: 30ch; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.25; letter-spacing: -0.02em; color: #16181D; text-wrap: balance">A RAG platform that answers from your organisation's documents — with citations, and only from what you're allowed to see.</p>
+<div data-reveal="up" data-reveal-delay="340" style="margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px">
+<a href="https://github.com/Ajeeetsingh/enterprise_knowledge_assistant" target="_blank" rel="noopener" class="btn-dark" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; background: #16181D; color: #FFFFFF; border-radius: 999px; text-decoration: none; font-weight: 500">View the code ↗</a>
+<a href="#architecture" class="btn-line" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border: 1px solid #C4BFB5; color: #16181D; border-radius: 999px; text-decoration: none; font-weight: 500">Jump to architecture</a>
+</div>
+
+<dl data-reveal="up" data-reveal-delay="460" style="margin: clamp(48px, 7vw, 80px) 0 0; border-top: 1px solid #DEDAD2; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 0 32px">
+<div style="padding-top: 20px"><dt style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #63666D">Role</dt><dd style="margin: 8px 0 0; font-size: 16px; line-height: 1.5">Sole architect and engineer</dd></div>
+<div style="padding-top: 20px"><dt style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #63666D">Stack</dt><dd style="margin: 8px 0 0; font-size: 16px; line-height: 1.5">FastAPI, React/TypeScript, PostgreSQL</dd></div>
+<div style="padding-top: 20px"><dt style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #63666D">Retrieval</dt><dd style="margin: 8px 0 0; font-size: 16px; line-height: 1.5">FAISS + BM25, RRF, cross-encoder</dd></div>
+<div style="padding-top: 20px"><dt style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #63666D">LLMs</dt><dd style="margin: 8px 0 0; font-size: 16px; line-height: 1.5">Groq, OpenAI, Gemini, Ollama</dd></div>
+</dl>
+</section>
+
+<!-- SCREEN -->
+<section style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px)">
+<div data-reveal="scale" role="img" aria-label="Placeholder for a screenshot of the Knowra chat with citations" style="aspect-ratio: 16 / 9; width: 100%; border: 1px dashed #C4BFB5; border-radius: 16px; background: #E3DFD8; display: flex; align-items: center; justify-content: center; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 14px; color: #63666D; text-align: center; padding: 24px; box-sizing: border-box">[Screenshot: chat answer with numbered citations and the source viewer open]</div>
+</section>
+
+<!-- RESULTS -->
+<section style="max-width: 1200px; margin: 0 auto; padding: clamp(72px, 9vw, 120px) clamp(16px, 4vw, 40px) 0">
+<p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: #0F6E6E">Results</p>
+<h2 data-reveal="clip" style="margin-top: 14px; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.03em; font-weight: 600; line-height: 1.1">What testing showed.</h2>
+<div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px">
+<div data-reveal="up" class="lift" style="border: 1px solid #DEDAD2; border-radius: 14px; background: #FBFAF7; padding: 24px">
+<p style="font-size: 40px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: #0F6E6E">7–8<span style="font-size: 0.5em; color: #63666D"> / 10</span></p>
+<p style="margin-top: 12px; font-size: 15px; line-height: 1.5; color: #3A3D44">Test questions answered from the correct source document</p>
+</div>
+<div data-reveal="up" data-reveal-delay="80" class="lift" style="border: 1px solid #DEDAD2; border-radius: 14px; background: #FBFAF7; padding: 24px">
+<p style="font-size: 40px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: #0F6E6E">Top 5</p>
+<p style="margin-top: 12px; font-size: 15px; line-height: 1.5; color: #3A3D44">Where the right source consistently ranks in retrieval</p>
+</div>
+<div data-reveal="up" data-reveal-delay="160" class="lift" style="border: 1px solid #DEDAD2; border-radius: 14px; background: #FBFAF7; padding: 24px">
+<p style="font-size: 40px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: #0F6E6E">~20%</p>
+<p style="margin-top: 12px; font-size: 15px; line-height: 1.5; color: #3A3D44">Fewer hallucinated answers after cross-encoder re-ranking, with answer quality up ~15–20%</p>
+</div>
+<div data-reveal="up" data-reveal-delay="240" class="lift" style="border: 1px solid #DEDAD2; border-radius: 14px; background: #FBFAF7; padding: 24px">
+<p style="font-size: 40px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: #0F6E6E">0<span style="font-size: 0.5em; color: #63666D"> / 200+</span></p>
+<p style="margin-top: 12px; font-size: 15px; line-height: 1.5; color: #3A3D44">Restricted-document leaks across permission test cases</p>
+</div>
+<div data-reveal="up" data-reveal-delay="320" class="lift" style="border: 1px solid #DEDAD2; border-radius: 14px; background: #FBFAF7; padding: 24px">
+<p style="font-size: 40px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: #0F6E6E">2–5<span style="font-size: 0.5em; color: #63666D"> s</span></p>
+<p style="margin-top: 12px; font-size: 15px; line-height: 1.5; color: #3A3D44">Typical answer time; 2–3 s for direct questions</p>
+</div>
+</div>
+<p style="margin-top: 16px; font-size: 14px; color: #63666D">Measured on internal test sets during development.</p>
+</section>
+
+<!-- PROBLEM -->
+<section style="max-width: 1200px; margin: 0 auto; padding: clamp(72px, 9vw, 120px) clamp(16px, 4vw, 40px) 0; display: flex; flex-wrap: wrap; gap: 32px 64px">
+<div data-reveal="left" style="flex: 1 1 280px">
+<p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: #0F6E6E">01 — The problem</p>
+<h2 data-reveal="clip" style="margin-top: 14px; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.03em; font-weight: 600; line-height: 1.1">The answer exists. Nobody can find it.</h2>
+</div>
+<div data-reveal="up" data-reveal-delay="150" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 18px; font-size: 18px; line-height: 1.65; color: #3A3D44">
+<p>Every company has the same productivity leak: the answer to "what's our remote work policy?" is already written down, buried in a PDF on a shared drive or in the head of whoever answered it last.</p>
+<p>So people ask a colleague, again. Or they ask a general chatbot, which answers confidently without ever having read the handbook. In an enterprise there's a second problem: a naive RAG system will happily retrieve a document the person asking was never allowed to see.</p>
+</div>
+</section>
+
+<!-- WHAT IT DOES -->
+<section style="max-width: 1200px; margin: 0 auto; padding: clamp(72px, 9vw, 120px) clamp(16px, 4vw, 40px) 0">
+<p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: #0F6E6E">02 — What it does</p>
+<h2 data-reveal="clip" style="margin-top: 14px; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.03em; font-weight: 600; line-height: 1.1; max-width: 22ch">Ask in plain English. Get an answer you can check.</h2>
+<div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 0 32px">
+<div data-reveal="up" style="border-top: 2px solid #16181D; padding: 18px 0 24px"><h3 style="font-size: 18px; font-weight: 600">Cited answers</h3><p style="margin-top: 8px; font-size: 15px; line-height: 1.6; color: #3A3D44">Each claim links to the exact source page, with the passage highlighted.</p></div>
+<div data-reveal="up" style="border-top: 2px solid #16181D; padding: 18px 0 24px"><h3 style="font-size: 18px; font-weight: 600">Permission-aware</h3><p style="margin-top: 8px; font-size: 15px; line-height: 1.6; color: #3A3D44">Admins decide which roles can see which documents. Access is enforced before retrieval, and no authorised source means no claim.</p></div>
+<div data-reveal="up" style="border-top: 2px solid #16181D; padding: 18px 0 24px"><h3 style="font-size: 18px; font-weight: 600">Any document</h3><p style="margin-top: 8px; font-size: 15px; line-height: 1.6; color: #3A3D44">Multi-format ingestion with structure extraction and duplicate detection.</p></div>
+<div data-reveal="up" style="border-top: 2px solid #16181D; padding: 18px 0 24px"><h3 style="font-size: 18px; font-weight: 600">Admin tooling</h3><p style="margin-top: 8px; font-size: 15px; line-height: 1.6; color: #3A3D44">Manage collections, users and roles from one console.</p></div>
+</div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" style="margin-top: clamp(72px, 9vw, 120px); background: #ECE9E3; border-top: 1px solid #DEDAD2; border-bottom: 1px solid #DEDAD2">
+<div style="max-width: 1200px; margin: 0 auto; padding: clamp(64px, 8vw, 104px) clamp(16px, 4vw, 40px)">
+<p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: #0F6E6E">03 — Architecture</p>
+<h2 data-reveal="clip" style="margin-top: 14px; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.03em; font-weight: 600; line-height: 1.1">From a document to a cited answer.</h2>
+<p style="margin-top: 14px; font-size: 17px; color: #63666D; max-width: 60ch">Each stage, and the decision behind it.</p>
+<ol style="margin: 40px 0 0; padding: 0; list-style: none">
+<sc-for list="{{ pipeline }}" as="s" hint-placeholder-count="7">
+<li data-reveal="up" data-reveal-delay="{{ s.delay }}" style="border-top: 1px solid #DEDAD2; padding: 24px 0; display: flex; flex-wrap: wrap; gap: 12px 40px; align-items: baseline">
+<div style="flex: 1 1 220px; display: flex; gap: 16px; align-items: baseline">
+<span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: #0F6E6E">{{ s.n }}</span>
+<h3 style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em">{{ s.stage }}</h3>
+</div>
+<p style="flex: 2 1 340px; font-size: 16px; line-height: 1.6; color: #3A3D44">{{ s.detail }}</p>
+<p style="flex: 2 1 300px; font-size: 15px; line-height: 1.55; color: #16181D; background: #DDEDEA; border-radius: 8px; padding: 10px 14px">{{ s.choice }}</p>
+</li>
+</sc-for>
+</ol>
+</div>
+</section>
+
+<!-- DECISIONS -->
+<section style="max-width: 1200px; margin: 0 auto; padding: clamp(72px, 9vw, 120px) clamp(16px, 4vw, 40px) 0">
+<p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: #0F6E6E">04 — Engineering decisions</p>
+<h2 data-reveal="clip" style="margin-top: 14px; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.03em; font-weight: 600; line-height: 1.1">The calls that shaped it.</h2>
+<div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr)); gap: 20px">
+<sc-for list="{{ decisions }}" as="d" hint-placeholder-count="4">
+<article data-reveal="scale" data-reveal-delay="{{ d.delay }}" class="lift" style="border: 1px solid #DEDAD2; border-radius: 14px; background: #FBFAF7; padding: 28px; display: flex; flex-direction: column; gap: 10px">
+<h3 style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em">{{ d.title }}</h3>
+<p style="font-size: 16px; line-height: 1.6; color: #3A3D44">{{ d.body }}</p>
+</article>
+</sc-for>
+</div>
+</section>
+
+<!-- PRODUCTION -->
+<section style="max-width: 1200px; margin: 0 auto; padding: clamp(72px, 9vw, 120px) clamp(16px, 4vw, 40px) 0; display: flex; flex-wrap: wrap; gap: 32px 64px">
+<div data-reveal="left" style="flex: 1 1 280px">
+<p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: #0F6E6E">05 — Production readiness</p>
+<h2 data-reveal="clip" style="margin-top: 14px; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.03em; font-weight: 600; line-height: 1.1">Built to run, not to demo.</h2>
+</div>
+<ul style="flex: 999 1 560px; min-width: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 0 32px">
+<li data-reveal="up" data-reveal-delay="120" style="border-top: 1px solid #DEDAD2; padding: 18px 0"><p style="font-weight: 600">Auth &amp; access</p><p style="margin-top: 6px; font-size: 15px; line-height: 1.55; color: #3A3D44">JWT auth, RBAC across 4 roles, rate limiting.</p></li>
+<li data-reveal="up" data-reveal-delay="120" style="border-top: 1px solid #DEDAD2; padding: 18px 0"><p style="font-weight: 600">Containers</p><p style="margin-top: 6px; font-size: 15px; line-height: 1.55; color: #3A3D44">Docker Compose, non-root images, health checks.</p></li>
+<li data-reveal="up" data-reveal-delay="120" style="border-top: 1px solid #DEDAD2; padding: 18px 0"><p style="font-weight: 600">Data</p><p style="margin-top: 6px; font-size: 15px; line-height: 1.55; color: #3A3D44">PostgreSQL with Alembic migrations; incremental index updates.</p></li>
+<li data-reveal="up" data-reveal-delay="120" style="border-top: 1px solid #DEDAD2; padding: 18px 0"><p style="font-weight: 600">Tests</p><p style="margin-top: 6px; font-size: 15px; line-height: 1.55; color: #3A3D44">PyTest on the backend plus frontend test suites.</p></li>
+</ul>
+</section>
+
+<!-- NEXT -->
+<section style="margin-top: clamp(80px, 10vw, 136px); background: #16181D; color: #E8E9EC">
+<div style="max-width: 1200px; margin: 0 auto; padding: clamp(64px, 8vw, 104px) clamp(16px, 4vw, 40px) 48px">
+<h2 data-reveal="clip" style="font-size: clamp(32px, 4.4vw, 56px); letter-spacing: -0.035em; font-weight: 600; line-height: 1.05; color: #FFFFFF; max-width: 20ch">Need a knowledge assistant your team can trust?</h2>
+<div data-reveal="up" data-reveal-delay="200" style="margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px">
+<a href="mailto:ajeetsingh7632@gmail.com" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; background: #FFFFFF; color: #16181D; border-radius: 999px; text-decoration: none; font-weight: 500">Email me</a>
+<a href="DocumentIntelligence.dc.html" class="onDark" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border: 1px solid #3A3F48; border-radius: 999px; font-weight: 500">Next: Document Intelligence →</a>
+</div>
+<footer style="margin-top: clamp(64px, 8vw, 104px); border-top: 1px solid #2A2E36; padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: #8A909C">
+<p>© 2026 Ajeet Singh</p>
+<a href="Main.dc.html" class="onDark" style="font-size: 14px">Back to home</a>
+</footer>
+</div>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true,"tsType":"boolean","section":"Motion"},"$preview":{"width":1440,"height":5600}}'>
+class Component extends DCLogic {
+  componentDidMount() { this.setupMotion(); }
+
+  componentWillUnmount() { if (this._cleanup) this._cleanup(); }
+
+  withDelay(list, step) {
+    return list.map((x, i) => Object.assign({}, x, { delay: String(i * (step || 70)) }));
+  }
+
+  // Scroll progress bar + reveal-on-scroll. Elements opt in with data-reveal="up|left|right|scale|fade|clip"
+  // and an optional data-reveal-delay (ms). Inline styles are cleared once each reveal finishes.
+  setupMotion() {
+    const bar = document.querySelector("[data-progress]");
+    const onScroll = () => {
+      if (!bar) return;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0) + ")";
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    let io = null;
+    this._cleanup = () => { window.removeEventListener("scroll", onScroll); if (io) io.disconnect(); };
+
+    if (this.props.motion === false) return;
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const nodes = Array.from(document.querySelectorAll("[data-reveal]"));
+    if (reduce || !nodes.length || !("IntersectionObserver" in window)) return;
+
+    const start = { up: "translateY(32px)", left: "translateX(-40px)", right: "translateX(40px)", scale: "translateY(20px) scale(0.96)", fade: "none" };
+    const delayOf = n => parseInt(n.getAttribute("data-reveal-delay") || "0", 10) || 0;
+    const reset = n => { n.style.transition = ""; n.style.opacity = ""; n.style.transform = ""; n.style.clipPath = ""; };
+    const show = n => {
+      if (n.__shown) return;
+      n.__shown = true;
+      n.style.opacity = "1";
+      n.style.transform = "none";
+      n.style.clipPath = "inset(0 0 0 0)";
+      setTimeout(() => reset(n), delayOf(n) + 1200);
+    };
+    nodes.forEach(n => {
+      const kind = n.getAttribute("data-reveal") || "up";
+      if (kind === "clip") n.style.clipPath = "inset(0 100% 0 0)";
+      else { n.style.opacity = "0"; n.style.transform = start[kind] || start.up; }
+    });
+    void document.body.offsetHeight;
+    nodes.forEach(n => {
+      const d = delayOf(n) + "ms";
+      n.style.transition = "opacity .7s ease " + d + ", transform .9s cubic-bezier(.16,1,.3,1) " + d + ", clip-path 1s cubic-bezier(.77,0,.18,1) " + d;
+    });
+    let fired = false;
+    try {
+      io = new IntersectionObserver(entries => {
+        fired = true;
+        entries.forEach(en => { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } });
+      }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    } catch (e) { nodes.forEach(reset); return; }
+    nodes.forEach(n => io.observe(n));
+    setTimeout(() => { if (!fired) { io.disconnect(); nodes.forEach(show); } }, 1500);
+  }
+
+  renderVals() {
+    return {
+      pipeline: this.withDelay([
+        { n: "01", stage: "Ingestion", detail: "Multi-format upload with structure extraction. Checksums catch duplicates; only new or changed documents are re-indexed.", choice: "Incremental by default, so re-uploading a folder costs nothing." },
+        { n: "02", stage: "Chunking", detail: "Semantic chunking that follows headings, clauses and tables instead of a fixed token window.", choice: "Keep a clause in one chunk, so an answer never straddles two sections." },
+        { n: "03", stage: "Query routing", detail: "An intent classifier labels each request as document, general, product-help or unsafe.", choice: "Skip retrieval when it isn't needed; apply guardrails to unsafe queries." },
+        { n: "04", stage: "Access filter", detail: "Role-based document access is resolved before any search runs, and fails closed.", choice: "Restricted text is never retrieved, so it can never reach the LLM context." },
+        { n: "05", stage: "Hybrid retrieval", detail: "Multi-query expansion, then dense (FAISS, Sentence Transformers) and sparse (BM25) search, fused with Reciprocal Rank Fusion and metadata-aware rescoring.", choice: "Keywords catch acronyms and policy codes that embeddings blur." },
+        { n: "06", stage: "Re-ranking", detail: "A cross-encoder re-scores the fused candidates against the question.", choice: "Fewer, better chunks: ~20% fewer hallucinated answers in testing." },
+        { n: "07", stage: "Answer & cite", detail: "A provider-agnostic LLM layer writes the answer from the selected chunks; each citation opens the source page with the passage highlighted.", choice: "No authorised source, no claim — it says so instead of guessing." }
+      ], 60),
+      decisions: this.withDelay([
+        { title: "Filter before retrieval, not after", body: "Post-filtering generated answers is too late: the restricted text has already been in the prompt. Resolving access first, and failing closed when it can't be resolved, makes leaks structurally impossible rather than unlikely." },
+        { title: "Hybrid over pure vector search", body: "Company documents are full of acronyms, product codes and policy numbers. Dense vectors handle paraphrase; BM25 handles the exact terms. RRF combines both without hand-tuned weights." },
+        { title: "Route before you retrieve", body: "Not every message needs a search. Classifying intent first saves latency and tokens on small talk and product-help questions, and gives one clear place to enforce guardrails." },
+        { title: "Provider-agnostic LLM layer", body: "One interface over Groq, OpenAI, Gemini and Ollama, so the model can be swapped for cost, latency or data-residency reasons without touching retrieval." }
+      ], 120)
+    };
+  }
+}
+</script>
+</body>
+</html>

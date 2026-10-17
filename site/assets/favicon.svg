@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F6E6E" />
+      <stop offset="100%" stop-color="#083E3E" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#tealGrad)" />
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="none" stroke="#2FA59A" stroke-width="1.5" stroke-opacity="0.4" />
+  <text x="32" y="41" font-family="'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.03em">AS</text>
+  <circle cx="50" cy="14" r="3.5" fill="#6CC5B9" />
+</svg>

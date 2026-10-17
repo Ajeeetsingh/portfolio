@@ -1,0 +1,2137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowra | Case Study · Ajeet Singh</title>
+<meta name="description" content="Ajeet Singh, AI/ML Engineer in Bengaluru building production Generative AI, RAG, multi-agent and document-intelligence systems.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<!-- OpenGraph / Social Cards -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Knowra | Enterprise RAG Case Study · Ajeet Singh">
+<meta property="og:description" content="Permission-aware enterprise RAG platform with fail-closed RBAC, hybrid dense + sparse retrieval and verifiable passage citations.">
+<meta property="og:image" content="assets/og-image.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Knowra | Enterprise RAG Case Study · Ajeet Singh">
+<meta name="twitter:description" content="Permission-aware enterprise RAG platform with fail-closed RBAC, hybrid dense + sparse retrieval and verifiable passage citations.">
+<meta name="twitter:image" content="assets/og-image.svg">
+<meta name="theme-color" content="#F4F2EE">
+
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Knowra: Permission-Aware Enterprise RAG Platform",
+  "author": {
+    "@type": "Person",
+    "name": "Ajeet Singh",
+    "jobTitle": "AI/ML Engineer",
+    "url": "https://github.com/Ajeeetsingh"
+  },
+  "description": "Enterprise RAG platform with fail-closed RBAC access control, hybrid FAISS + BM25 retrieval, cross-encoder re-ranking, and verified passage citations.",
+  "keywords": ["RAG", "Enterprise AI", "RBAC", "FAISS", "BM25", "Reciprocal Rank Fusion", "FastAPI"]
+}
+</script>
+
+<style>
+/* Base Styles */
+body {
+  margin: 0;
+  background: #F4F2EE;
+  color: #16181D;
+  font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: #0F6E6E; text-decoration: none; }
+a:hover { color: #0B5252; }
+h1, h2, h3, h4, p, ul, ol, dl, dd { margin: 0; }
+.navlink { color: #3A3D44; text-decoration: none; }
+.navlink:hover { color: #16181D; }
+.btn-dark {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
+  background: #16181D; color: #FFFFFF; border-radius: 999px; text-decoration: none; font-weight: 500;
+  transition: background .2s ease;
+}
+.btn-dark:hover { background: #2A2E36 !important; }
+.btn-line {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
+  border: 1px solid #C4BFB5; color: #16181D; border-radius: 999px; text-decoration: none; font-weight: 500;
+  transition: border-color .2s ease, background .2s ease;
+}
+.btn-line:hover { border-color: #16181D !important; background: rgba(22, 24, 29, 0.03); }
+.arrow { text-decoration: none; font-weight: 500; }
+.arrow:hover { text-decoration: underline; text-underline-offset: 4px; }
+.onDark { color: #FFFFFF; text-decoration: none; }
+.onDark:hover { color: #9FD8D0; }
+.lift {
+  transition: transform .35s cubic-bezier(.16, 1, .3, 1), box-shadow .35s ease, border-color .35s ease;
+}
+.lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -28px rgba(15, 17, 21, .35);
+  border-color: #C4BFB5 !important;
+}
+:focus-visible { outline: 2px solid #0F6E6E; outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .lift, .lift:hover { transition: none; transform: none; }
+  .flow { animation: none !important; }
+}
+
+/* Animations */
+.flow { animation: flow 3.2s ease-in-out infinite; }
+@keyframes flow { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+
+/* Media Showcase Slider */
+.showcase-wrapper {
+  background: #16181D;
+  border: 1px solid #2B2F37;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 32px 64px -24px rgba(22, 24, 29, 0.45);
+  color: #E8E9EC;
+  display: flex;
+  flex-direction: column;
+}
+.showcase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #1A1D23;
+  border-bottom: 1px solid #2B2F37;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-height: 48px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+.showcase-dots-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.window-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-red { background: #FF5F56; }
+.dot-yellow { background: #FFBD2E; }
+.dot-green { background: #27C93F; }
+.window-title {
+  margin-left: 8px;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 12px;
+  color: #8A909C;
+  letter-spacing: 0.02em;
+}
+.showcase-nav-pills {
+  display: flex;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #121418;
+  border-bottom: 1px solid #232730;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  min-height: 54px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+.showcase-tab {
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.05);
+  color: #B8BCC6;
+  font-family: 'Geist', ui-sans-serif, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 8px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all .2s ease;
+}
+.showcase-tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+.showcase-tab.active {
+  background: #0F6E6E;
+  color: #FFFFFF;
+  border-color: #179393;
+}
+
+/* Floating Video Clip Switcher Overlay (Lives inside Video Slide 0) */
+.video-switcher-overlay {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(14, 16, 22, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+  max-width: calc(100% - 24px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.video-switcher-overlay::-webkit-scrollbar {
+  display: none;
+}
+.vswitch-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  color: #8A909C;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.vswitch-pill {
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  color: #B2B7C2;
+  font-family: 'Geist', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: all .2s ease;
+}
+.vswitch-pill:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+.vswitch-pill.active {
+  background: #0F6E6E;
+  color: #FFFFFF;
+  border-color: #179393;
+}
+
+/* Viewport Stage: Strictly Static 16:9 Aspect Ratio */
+.showcase-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0B0D10;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.showcase-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0B0D10;
+}
+.showcase-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.showcase-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+  display: block;
+}
+.showcase-slide img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: #0B0D10;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform-origin: center center;
+  transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
+  image-rendering: -webkit-optimize-contrast;
+}
+.showcase-slide[data-type="image"] {
+  cursor: zoom-in;
+}
+
+/* Floating Image Zoom Controls (Active on picture slides 1-4) */
+.stage-zoom-controls {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 14;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(14, 16, 22, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+  user-select: none;
+}
+.zoom-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .15s ease;
+  font-family: inherit;
+  padding: 0;
+}
+.zoom-btn:hover {
+  background: #0F6E6E;
+  border-color: #179393;
+  transform: scale(1.06);
+}
+.zoom-btn-text {
+  width: auto;
+  border-radius: 999px;
+  padding: 0 9px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Geist Mono', monospace;
+  letter-spacing: 0.02em;
+}
+.zoom-level-badge {
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6CC5B9;
+  min-width: 38px;
+  text-align: center;
+  user-select: none;
+}
+.zoom-hint-pill {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: #8A909C;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Fullscreen High-Res Lightbox Modal */
+.showcase-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.showcase-lightbox.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 16, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.lightbox-content {
+  position: relative;
+  z-index: 2;
+  width: min(94vw, 1500px);
+  height: min(90vh, 1000px);
+  display: flex;
+  flex-direction: column;
+  background: #14161C;
+  border: 1px solid #2B2F37;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.85);
+}
+.lightbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #1A1D23;
+  border-bottom: 1px solid #2B2F37;
+  flex-shrink: 0;
+}
+.lightbox-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+.lightbox-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lightbox-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .15s ease;
+  text-decoration: none;
+}
+.lightbox-btn:hover {
+  background: #0F6E6E;
+  border-color: #179393;
+}
+.lightbox-viewport {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: auto;
+  background: #0B0D10;
+}
+.lightbox-viewport img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 6px;
+}
+.showcase-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(22, 24, 29, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.showcase-arrow:hover {
+  background: #0F6E6E;
+  border-color: #0F6E6E;
+  transform: translateY(-50%) scale(1.08);
+}
+.arrow-prev { left: 16px; }
+.arrow-next { right: 16px; }
+
+/* Caption Bar: Static Fixed Height to Prevent Vertical Jumping */
+.showcase-caption {
+  padding: 16px 20px;
+  background: #1A1D23;
+  border-top: 1px solid #2B2F37;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 86px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+.caption-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.caption-badge {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6CC5B9;
+  background: rgba(15, 110, 110, 0.3);
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  align-self: flex-start;
+}
+.caption-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.caption-desc {
+  font-size: 13px;
+  color: #A3A8B3;
+  line-height: 1.45;
+  max-width: 75ch;
+  height: 38px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.showcase-indicator-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3A3F48;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.indicator-dot.active {
+  background: #6CC5B9;
+  width: 24px;
+  border-radius: 999px;
+}
+
+/* Architecture Flowchart & Workflow */
+.arch-view-toggle {
+  display: inline-flex;
+  background: #E3DFD6;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid #D3CFCA;
+  gap: 4px;
+}
+.arch-toggle-btn {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #5A5E66;
+  font-family: 'Geist', ui-sans-serif, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 999px;
+  transition: all .2s ease;
+}
+.arch-toggle-btn.active {
+  background: #16181D;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Architecture Workflow Canvas & Flowchart */
+.workflow-canvas {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.workflow-track {
+  background: #16181D;
+  border: 1px solid #2B303B;
+  border-radius: 16px;
+  padding: clamp(20px, 3vw, 32px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  color: #FFFFFF;
+}
+.track-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #262B35;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.track-title {
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #FFFFFF;
+}
+.track-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #11403D;
+  color: #6CC5B9;
+  font-size: 13px;
+  font-weight: 700;
+}
+.track-pill {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #9FD8D0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* REAL FLOWCHART SYSTEM */
+.flowchart-chain {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.fc-step {
+  background: #1E222A;
+  border: 1px solid #313745;
+  border-radius: 12px;
+  padding: 14px 16px;
+  flex: 1 1 170px;
+  min-width: 155px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all .2s ease;
+  position: relative;
+}
+.fc-step:hover {
+  border-color: #6CC5B9;
+  background: #232833;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -6px rgba(108, 197, 185, 0.25);
+}
+.fc-badge {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6CC5B9;
+}
+.fc-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.3;
+}
+.fc-desc {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #9EA3B0;
+}
+.fc-terminal {
+  background: #102624;
+  border: 1.5px solid #1C5A52;
+  border-radius: 999px;
+  padding: 12px 18px;
+  color: #6CC5B9;
+  font-weight: 600;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  box-shadow: 0 0 16px rgba(108, 197, 185, 0.15);
+}
+.fc-gate {
+  border-color: #D97706;
+  background: rgba(217, 119, 6, 0.08);
+  flex: 1.2 1 200px;
+  min-width: 190px;
+}
+.fc-gate .fc-badge {
+  color: #FBBF24;
+}
+.fc-gate-branches {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 11px;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+}
+.fc-branch-pass {
+  color: #6CC5B9;
+  background: rgba(108, 197, 185, 0.1);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(108, 197, 185, 0.2);
+}
+.fc-branch-fail {
+  color: #F87171;
+  background: rgba(248, 113, 113, 0.1);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+.fc-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6CC5B9;
+  flex-shrink: 0;
+  padding: 0 2px;
+}
+.fc-arrow svg {
+  width: 20px;
+  height: 20px;
+  stroke: #6CC5B9;
+}
+@media (max-width: 860px) {
+  .flowchart-chain {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .fc-arrow svg {
+    transform: rotate(90deg);
+  }
+  .fc-arrow {
+    padding: 6px 0;
+  }
+}
+
+/* DETAILED PIPELINE SPECS VIEW */
+.specs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: 16px;
+}
+.spec-card {
+  background: #1E222A;
+  border: 1px solid #313745;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.spec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid #2B313D;
+  padding-bottom: 10px;
+}
+.spec-num {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6CC5B9;
+  background: #11403D;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.spec-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+.spec-type {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: #2D323C;
+  color: #B8BCC6;
+}
+.spec-summary {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #C3C7D2;
+}
+.spec-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px dashed #2E3442;
+}
+.spec-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.spec-label {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8A909C;
+}
+.spec-val {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #E2E4E9;
+}
+.spec-val.metric {
+  color: #6CC5B9;
+  font-weight: 500;
+}
+
+/* Copy Email & Toast */
+.copy-btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #FFFFFF;
+  padding: 0 20px;
+  min-height: 48px;
+  border-radius: 999px;
+  transition: all .2s ease;
+}
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: #6CC5B9;
+  color: #6CC5B9;
+}
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  pointer-events: none;
+  transition: transform .3s cubic-bezier(.16, 1, .3, 1), opacity .3s ease;
+  transform: translateY(20px);
+  opacity: 0;
+}
+.toast-container.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.toast-body {
+  background: #16181D;
+  color: #FFFFFF;
+  border: 1px solid #2B2F37;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+  padding: 12px 20px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.toast-check {
+  color: #6CC5B9;
+  font-weight: 700;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="sc-host" data-sc-name="Knowra">
+<div style="background: rgb(244, 242, 238); color: rgb(22, 24, 29); min-height: 100vh;">
+  <!-- Scroll Progress Indicator -->
+  <div data-progress="bar" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; right: 0px; height: 3px; background: rgb(15, 110, 110); transform-origin: 0px 50%; transform: scaleX(0); z-index: 30;"></div>
+
+  <!-- Header -->
+  <header style="position: sticky; top: 0px; z-index: 20; background: rgba(244, 242, 238, 0.9); backdrop-filter: blur(8px); border-bottom: 1px solid rgb(222, 218, 210);">
+    <nav aria-label="Primary" style="max-width: 1200px; margin: 0px auto; padding: 16px clamp(16px, 4vw, 40px); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <a href="index.html" class="navlink" style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-weight: 500;">← Ajeet Singh</a>
+      <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; font-size: 15px;">
+        <a href="https://github.com/Ajeeetsingh/enterprise_knowledge_assistant" target="_blank" rel="noopener" class="navlink">Code ↗</a>
+        <a href="Ajeet-Singh-Resume.pdf" target="_blank" rel="noopener" class="btn-line" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0px 16px; border: 1px solid rgb(196, 191, 181); border-radius: 999px; color: rgb(22, 24, 29); text-decoration: none; font-weight: 500;">Résumé</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Case Study Hero -->
+    <section style="max-width: 1200px; margin: 0px auto; padding: clamp(56px, 9vw, 112px) clamp(16px, 4vw, 40px) clamp(48px, 6vw, 72px);">
+      <p data-reveal="fade" style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: rgb(99, 102, 109);">Case study · Personal project · 2026 to Present</p>
+      <h1 data-reveal="up" data-reveal-delay="100" style="margin-top: 24px; font-size: clamp(48px, 7vw, 96px); line-height: 1; letter-spacing: -0.04em; font-weight: 600;">Knowra</h1>
+      <p data-reveal="up" data-reveal-delay="220" style="margin-top: 28px; max-width: 30ch; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.25; letter-spacing: -0.02em; color: rgb(22, 24, 29); text-wrap: balance;">A RAG platform that answers from your organisation's documents, backed by citations, and restricted strictly to what you're allowed to see.</p>
+      
+      <div data-reveal="up" data-reveal-delay="340" style="margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px;">
+        <a href="https://github.com/Ajeeetsingh/enterprise_knowledge_assistant" target="_blank" rel="noopener" class="btn-dark">View the code ↗</a>
+        <a href="#architecture" class="btn-line">Jump to architecture ↓</a>
+      </div>
+
+      <dl data-reveal="up" data-reveal-delay="460" style="margin: clamp(48px, 7vw, 80px) 0px 0px; border-top: 1px solid rgb(222, 218, 210); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 0px 32px;">
+        <div style="padding-top: 20px;">
+          <dt style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(99, 102, 109);">Role</dt>
+          <dd style="margin: 8px 0px 0px; font-size: 16px; line-height: 1.5;">Sole architect and engineer</dd>
+        </div>
+        <div style="padding-top: 20px;">
+          <dt style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(99, 102, 109);">Stack</dt>
+          <dd style="margin: 8px 0px 0px; font-size: 16px; line-height: 1.5;">FastAPI, React/TypeScript, PostgreSQL</dd>
+        </div>
+        <div style="padding-top: 20px;">
+          <dt style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(99, 102, 109);">Retrieval</dt>
+          <dd style="margin: 8px 0px 0px; font-size: 16px; line-height: 1.5;">FAISS + BM25, RRF, cross-encoder</dd>
+        </div>
+        <div style="padding-top: 20px;">
+          <dt style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(99, 102, 109);">LLMs</dt>
+          <dd style="margin: 8px 0px 0px; font-size: 16px; line-height: 1.5;">Groq, OpenAI, Gemini, Ollama</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- INTERACTIVE SHOWCASE SLIDER: VIDEO TRAILER + HIGH-RES SCREENSHOTS -->
+    <section style="max-width: 1200px; margin: 0px auto; padding: 0px clamp(16px, 4vw, 40px);">
+      <div data-reveal="scale" class="showcase-wrapper" id="knowraShowcase">
+        <!-- Window Chrome Top Bar -->
+        <div class="showcase-header">
+          <div class="showcase-dots-group">
+            <span class="window-dot dot-red"></span>
+            <span class="window-dot dot-yellow"></span>
+            <span class="window-dot dot-green"></span>
+            <span class="window-title">knowra.platform · Interactive Media Tour</span>
+          </div>
+          <div style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #8A909C;">
+            Slide <span id="currentSlideNum" style="color: #6CC5B9; font-weight: 600;">1</span> of <span id="totalSlideNum">5</span>
+          </div>
+        </div>
+
+        <!-- Category Tab Buttons -->
+        <div class="showcase-nav-pills" role="tablist">
+          <button type="button" class="showcase-tab active" data-slide="0" role="tab" aria-selected="true">
+            <span>▶</span> Video Showcase
+          </button>
+          <button type="button" class="showcase-tab" data-slide="1" role="tab" aria-selected="false">
+            <span>💬</span> Cited QA Chat
+          </button>
+          <button type="button" class="showcase-tab" data-slide="2" role="tab" aria-selected="false">
+            <span>📁</span> Ingestion &amp; Docs
+          </button>
+          <button type="button" class="showcase-tab" data-slide="3" role="tab" aria-selected="false">
+            <span>📊</span> Analytics Dashboard
+          </button>
+          <button type="button" class="showcase-tab" data-slide="4" role="tab" aria-selected="false">
+            <span>🛡️</span> RBAC &amp; Permissions
+          </button>
+        </div>
+
+        <!-- Viewport Stage -->
+        <div class="showcase-stage" id="showcaseStage">
+          <!-- Slide 0: Trailer Video -->
+          <div class="showcase-slide active" data-type="video" data-index="0">
+            <!-- Floating Video Clip Selector Overlay -->
+            <div class="video-switcher-overlay" id="videoSwitcherBar">
+              <span class="vswitch-label">Clip:</span>
+              <button type="button" class="vswitch-pill active" data-vsrc="assets/videos/knowra-trailer-v2-1920x1080-60fps.mp4" data-badge="1080p 60fps Trailer" data-title="Knowra Official Showcase Trailer" data-desc="Comprehensive walkthrough demonstrating cited QA, permission enforcement, and passage highlight exploration.">🎬 Official Trailer</button>
+              <button type="button" class="vswitch-pill" data-vsrc="assets/videos/knowra-02-how-it-works-1920x1080-60fps.mp4" data-badge="Architecture Explainer" data-title="How Knowra Works: Dual-Track RAG Pipeline" data-desc="Deep dive into chunking, reciprocal rank fusion, fail-closed RBAC access filtering, and cross-encoder re-ranking.">⚙️ How It Works</button>
+              <button type="button" class="vswitch-pill" data-vsrc="assets/videos/knowra-03-using-knowra-1920x1080-60fps.mp4" data-badge="User Walkthrough" data-title="Using Knowra: End-to-End User Experience" data-desc="Live demonstration of querying documents, inspecting exact passage highlights, and switching role contexts.">💻 Using Knowra</button>
+              <button type="button" class="vswitch-pill" data-vsrc="assets/videos/knowra-04-who-its-for-1920x1080-60fps.mp4" data-badge="Target Personas" data-title="Target Personas &amp; Enterprise Use Cases" data-desc="Exploring how Employees, HR, Finance, and Admins interact with distinct document boundaries.">👥 Target Personas</button>
+            </div>
+
+            <video id="knowraTrailerVideo" controls playsinline preload="metadata">
+              <source src="assets/videos/knowra-trailer-v2-1920x1080-60fps.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <!-- Floating Image Zoom & Pan Controls (Active only on Picture Slides 1-4) -->
+          <div class="stage-zoom-controls" id="stageZoomControls" style="display: none;" aria-label="Image Zoom Controls">
+            <button type="button" class="zoom-btn" id="zoomOutBtn" title="Zoom Out (-)" aria-label="Zoom Out">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <span class="zoom-level-badge" id="zoomLevelBadge">100%</span>
+            <button type="button" class="zoom-btn" id="zoomInBtn" title="Zoom In (+)" aria-label="Zoom In">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <button type="button" class="zoom-btn zoom-btn-text" id="zoomResetBtn" title="Reset Zoom (Fit to Container)" aria-label="Reset Zoom">
+              ↺ Fit
+            </button>
+            <button type="button" class="zoom-btn" id="zoomLightboxBtn" title="View Fullscreen High-Res Lightbox" aria-label="Fullscreen Lightbox">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            </button>
+          </div>
+
+          <!-- Slide 1: Chat UI -->
+          <div class="showcase-slide" data-type="image" data-index="1">
+            <img src="assets/Knowra_screenshots/Chat@2x.png" srcset="assets/Knowra_screenshots/Chat.png 1270w, assets/Knowra_screenshots/Chat@2x.png 2540w" sizes="(max-width: 1200px) 100vw, 1200px" alt="Knowra Chat Interface with Source Citations" draggable="false">
+          </div>
+
+          <!-- Slide 2: Ingestion & Documents -->
+          <div class="showcase-slide" data-type="image" data-index="2">
+            <img src="assets/Knowra_screenshots/Documents@2x.png" srcset="assets/Knowra_screenshots/Documents.png 1277w, assets/Knowra_screenshots/Documents@2x.png 2554w" sizes="(max-width: 1200px) 100vw, 1200px" alt="Knowra Document Management &amp; Collection Access" draggable="false">
+          </div>
+
+          <!-- Slide 3: Dashboard & Analytics -->
+          <div class="showcase-slide" data-type="image" data-index="3">
+            <img src="assets/Knowra_screenshots/DashBoard@2x.png" srcset="assets/Knowra_screenshots/DashBoard.png 1268w, assets/Knowra_screenshots/DashBoard@2x.png 2536w" sizes="(max-width: 1200px) 100vw, 1200px" alt="Knowra Knowledge Base Dashboard and Telemetry" draggable="false">
+          </div>
+
+          <!-- Slide 4: RBAC & Permissions -->
+          <div class="showcase-slide" data-type="image" data-index="4">
+            <img src="assets/Knowra_screenshots/AdminOveriew@2x.png" srcset="assets/Knowra_screenshots/AdminOveriew.png 1270w, assets/Knowra_screenshots/AdminOveriew@2x.png 2540w" sizes="(max-width: 1200px) 100vw, 1200px" alt="Knowra Security Administration and Role Permissions" draggable="false">
+          </div>
+
+          <!-- Arrow Controls -->
+          <button type="button" class="showcase-arrow arrow-prev" id="prevSlideBtn" aria-label="Previous slide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button type="button" class="showcase-arrow arrow-next" id="nextSlideBtn" aria-label="Next slide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+
+        <!-- Caption Bar & Dots -->
+        <div class="showcase-caption">
+          <div class="caption-details">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span class="caption-badge" id="slideBadge">1080p 60fps Trailer</span>
+              <span class="zoom-hint-pill" id="zoomHintPill" style="display: none;">🔍 Double-click or use [+] to zoom inside container</span>
+            </div>
+            <div class="caption-title" id="slideTitle">Knowra Official Showcase Trailer</div>
+            <div class="caption-desc" id="slideDesc">Comprehensive walkthrough demonstrating cited QA, permission enforcement, and passage highlight exploration.</div>
+          </div>
+          <div class="showcase-indicator-dots" id="indicatorDots">
+            <span class="indicator-dot active" data-slide="0"></span>
+            <span class="indicator-dot" data-slide="1"></span>
+            <span class="indicator-dot" data-slide="2"></span>
+            <span class="indicator-dot" data-slide="3"></span>
+            <span class="indicator-dot" data-slide="4"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <!-- Results Section -->
+    <section style="max-width: 1200px; margin: 0px auto; padding: clamp(72px, 9vw, 120px) clamp(16px, 4vw, 40px) 0px;">
+      <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #0F6E6E; margin-bottom: 12px; line-height: 1.05;">Results</h2>
+      <p data-reveal="clip" style="font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.25; color: #16181D; text-wrap: balance;">What testing showed.</p>
+      
+      <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px;">
+        <div data-reveal="up" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+          <p style="font-size: 40px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: rgb(15, 110, 110);">7–8<span style="font-size: 0.5em; color: rgb(99, 102, 109);"> / 10</span></p>
+          <p style="margin-top: 12px; font-size: 15px; line-height: 1.5; color: rgb(58, 61, 68);">Test questions answered from the correct source document</p>
+        </div>
+        <div data-reveal="up" data-reveal-delay="80" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+          <p style="font-size: 40px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: rgb(15, 110, 110);">Top 5</p>
+          <p style="margin-top: 12px; font-size: 15px; line-height: 1.5; color: rgb(58, 61, 68);">Where the right source consistently ranks in retrieval</p>
+        </div>
+        <div data-reveal="up" data-reveal-delay="160" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+          <p style="font-size: 40px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: rgb(15, 110, 110);">~20%</p>
+          <p style="margin-top: 12px; font-size: 15px; line-height: 1.5; color: rgb(58, 61, 68);">Fewer hallucinated answers after cross-encoder re-ranking, with answer quality up ~15–20%</p>
+        </div>
+        <div data-reveal="up" data-reveal-delay="240" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+          <p style="font-size: 40px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: rgb(15, 110, 110);">0<span style="font-size: 0.5em; color: rgb(99, 102, 109);"> / 200+</span></p>
+          <p style="margin-top: 12px; font-size: 15px; line-height: 1.5; color: rgb(58, 61, 68);">Restricted-document leaks across permission test cases</p>
+        </div>
+        <div data-reveal="up" data-reveal-delay="320" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+          <p style="font-size: 40px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: rgb(15, 110, 110);">2–5<span style="font-size: 0.5em; color: rgb(99, 102, 109);"> s</span></p>
+          <p style="margin-top: 12px; font-size: 15px; line-height: 1.5; color: rgb(58, 61, 68);">Typical answer time; 2–3 s for direct questions</p>
+        </div>
+      </div>
+      <p style="margin-top: 16px; font-size: 14px; color: rgb(99, 102, 109);">Measured on internal test sets during development.</p>
+    </section>
+
+    <!-- Problem & Capabilities -->
+    <section style="max-width: 1200px; margin: 0px auto; padding: clamp(72px, 9vw, 120px) clamp(16px, 4vw, 40px) 0px; display: flex; flex-wrap: wrap; gap: 32px 64px;">
+      <div data-reveal="left" style="flex: 1 1 280px;">
+        <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #0F6E6E; margin-bottom: 12px; line-height: 1.05;">The Problem</h2>
+        <p data-reveal="clip" style="font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.25; color: #16181D; text-wrap: balance;">The answer exists. Nobody can find it.</p>
+      </div>
+      <div data-reveal="up" data-reveal-delay="150" style="flex: 999 1 560px; min-width: 0px; display: flex; flex-direction: column; gap: 18px; font-size: 18px; line-height: 1.65; color: rgb(58, 61, 68);">
+        <p>Every company has the same productivity leak: the answer to "what's our remote work policy?" is already written down, buried in a PDF on a shared drive or in the head of whoever answered it last.</p>
+        <p>So people ask a colleague, again. Or they ask a general chatbot, which answers confidently without ever having read the handbook. In an enterprise there's a second problem: a naive RAG system will happily retrieve a document the person asking was never allowed to see.</p>
+      </div>
+    </section>
+
+    <section style="max-width: 1200px; margin: 0px auto; padding: clamp(72px, 9vw, 120px) clamp(16px, 4vw, 40px) 0px;">
+      <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #0F6E6E; margin-bottom: 12px; line-height: 1.05;">What It Does</h2>
+      <p data-reveal="clip" style="font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.25; color: #16181D; text-wrap: balance; max-width: 28ch;">Ask in plain English. Get an answer you can check.</p>
+      <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 0px 32px;">
+        <div data-reveal="up" style="border-top: 2px solid rgb(22, 24, 29); padding: 18px 0px 24px;">
+          <h3 style="font-size: 18px; font-weight: 600;">Cited answers</h3>
+          <p style="margin-top: 8px; font-size: 15px; line-height: 1.6; color: rgb(58, 61, 68);">Each claim links to the exact source page, with the passage highlighted.</p>
+        </div>
+        <div data-reveal="up" style="border-top: 2px solid rgb(22, 24, 29); padding: 18px 0px 24px;">
+          <h3 style="font-size: 18px; font-weight: 600;">Permission-aware</h3>
+          <p style="margin-top: 8px; font-size: 15px; line-height: 1.6; color: rgb(58, 61, 68);">Admins decide which roles can see which documents. Access is enforced before retrieval, and no authorised source means no claim.</p>
+        </div>
+        <div data-reveal="up" style="border-top: 2px solid rgb(22, 24, 29); padding: 18px 0px 24px;">
+          <h3 style="font-size: 18px; font-weight: 600;">Any document</h3>
+          <p style="margin-top: 8px; font-size: 15px; line-height: 1.6; color: rgb(58, 61, 68);">Multi-format ingestion with structure extraction and duplicate detection.</p>
+        </div>
+        <div data-reveal="up" style="border-top: 2px solid rgb(22, 24, 29); padding: 18px 0px 24px;">
+          <h3 style="font-size: 18px; font-weight: 600;">Admin tooling</h3>
+          <p style="margin-top: 8px; font-size: 15px; line-height: 1.6; color: rgb(58, 61, 68);">Manage collections, users and roles from one console.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 03: ADVANCED ARCHITECTURE WORKFLOW & FLOWCHART -->
+    <section id="architecture" style="margin-top: clamp(72px, 9vw, 120px); background: rgb(236, 233, 227); border-top: 1px solid rgb(222, 218, 210); border-bottom: 1px solid rgb(222, 218, 210);">
+      <div style="max-width: 1200px; margin: 0px auto; padding: clamp(64px, 8vw, 104px) clamp(16px, 4vw, 40px);">
+        <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+          <div>
+            <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #0F6E6E; margin-bottom: 12px; line-height: 1.05;">Architecture</h2>
+            <p data-reveal="clip" style="font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.25; color: #16181D; text-wrap: balance;">From a document to a cited answer.</p>
+            <p style="margin-top: 10px; font-size: 17px; color: rgb(99, 102, 109); max-width: 60ch;">Dual-pipeline system: Offline Ingestion &amp; Indexing + Online Fail-Closed Retrieval.</p>
+          </div>
+          <div class="arch-view-toggle">
+            <button type="button" class="arch-toggle-btn active" id="btnViewFlowchart">⚡ Workflow Flowchart</button>
+            <button type="button" class="arch-toggle-btn" id="btnViewTable">📋 Detailed Pipeline Specs</button>
+          </div>
+        </div>
+
+        <!-- 1. REAL VISUAL WORKFLOW FLOWCHART VIEW -->
+        <div class="workflow-canvas" id="viewFlowchart">
+          <!-- PIPELINE A: OFFLINE INGESTION & ACCESS INDEXING FLOWCHART -->
+          <div class="workflow-track">
+            <div class="track-header">
+              <div class="track-title">
+                <span class="track-tag">A</span>
+                <span>Offline Ingestion &amp; Security Indexing Flow</span>
+              </div>
+              <span class="track-pill">Background ETL Pipeline · Asynchronous</span>
+            </div>
+
+            <div class="flowchart-chain">
+              <!-- Terminal: Ingress -->
+              <div class="fc-terminal">
+                <span>📄</span> Raw Documents
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Step 1 -->
+              <div class="fc-step">
+                <div class="fc-badge">Step 1 · Dedupe Gate</div>
+                <div class="fc-title">Parse &amp; Checksum</div>
+                <div class="fc-desc">PDF, DOCX, TXT. SHA-256 hash skips unchanged files.</div>
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="fc-step">
+                <div class="fc-badge">Step 2 · Segmentation</div>
+                <div class="fc-title">Semantic Chunking</div>
+                <div class="fc-desc">Splits along clause &amp; heading boundaries (512 tokens).</div>
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="fc-step">
+                <div class="fc-badge">Step 3 · Dual Store</div>
+                <div class="fc-title">FAISS + BM25 Indices</div>
+                <div class="fc-desc">Dense vector embeddings + Sparse keyword terms.</div>
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="fc-step">
+                <div class="fc-badge">Step 4 · Security Tag</div>
+                <div class="fc-title">Fail-Closed RBAC ACL</div>
+                <div class="fc-desc">Attaches user-role access permissions to chunks.</div>
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Terminal: Output -->
+              <div class="fc-terminal">
+                <span>💾</span> Index Ready
+              </div>
+            </div>
+          </div>
+
+          <!-- PIPELINE B: ONLINE QUERY & FAIL-CLOSED RETRIEVAL FLOWCHART -->
+          <div class="workflow-track">
+            <div class="track-header">
+              <div class="track-title">
+                <span class="track-tag">B</span>
+                <span>Online Query &amp; Fail-Closed Retrieval Flow</span>
+              </div>
+              <span class="track-pill">Synchronous Query Path · 2–5s Latency</span>
+            </div>
+
+            <div class="flowchart-chain">
+              <!-- Terminal: Start -->
+              <div class="fc-terminal">
+                <span>💬</span> User Question
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Step 1 -->
+              <div class="fc-step">
+                <div class="fc-badge">Step 1 · Classifier</div>
+                <div class="fc-title">Intent Router</div>
+                <div class="fc-desc">Routes chat &amp; greetings in ~60ms without search.</div>
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Decision Gate: RBAC Filter -->
+              <div class="fc-step fc-gate">
+                <div class="fc-badge">Step 2 · Security Gate</div>
+                <div class="fc-title">Pre-Retrieval RBAC</div>
+                <div class="fc-desc">Resolves JWT role against document ACLs.</div>
+                <div class="fc-gate-branches">
+                  <span class="fc-branch-pass">✓ Allowed → Hybrid Search</span>
+                  <span class="fc-branch-fail">✗ Restricted → Safe Refusal</span>
+                </div>
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="fc-step">
+                <div class="fc-badge">Step 3 · Hybrid Search</div>
+                <div class="fc-title">Parallel Retrieval</div>
+                <div class="fc-desc">FAISS vector similarity + BM25 keyword matching.</div>
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="fc-step">
+                <div class="fc-badge">Step 4 · Fusion</div>
+                <div class="fc-title">RRF Merge</div>
+                <div class="fc-desc">Reciprocal Rank Fusion outputs Top 30 candidates.</div>
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Step 5 -->
+              <div class="fc-step">
+                <div class="fc-badge">Step 5 · Cross-Encoder</div>
+                <div class="fc-title">Neural Re-Ranker</div>
+                <div class="fc-desc">Re-scores candidate pairs to extract Top 5 chunks.</div>
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Step 6 -->
+              <div class="fc-step">
+                <div class="fc-badge">Step 6 · LLM Synthesis</div>
+                <div class="fc-title">Grounded Engine</div>
+                <div class="fc-desc">Writes answer strictly from verified passages.</div>
+              </div>
+
+              <!-- Connector -->
+              <div class="fc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <!-- Terminal: Answer -->
+              <div class="fc-terminal">
+                <span>✅</span> Cited Answer
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. DETAILED PIPELINE SPECIFICATIONS VIEW (TOGGLE) -->
+        <div id="viewTable" class="specs-container" style="display: none; margin-top: 36px;">
+          <!-- TRACK A SPECS -->
+          <div class="workflow-track">
+            <div class="track-header">
+              <div class="track-title">
+                <span class="track-tag">A</span>
+                <span>Offline Ingestion &amp; Security Indexing Specifications</span>
+              </div>
+              <span class="track-pill">3 Pipeline Stages · Background ETL</span>
+            </div>
+
+            <div class="specs-grid">
+              <!-- Spec Card 1 -->
+              <div class="spec-card">
+                <div class="spec-header">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="spec-num">01</span>
+                    <span class="spec-name">Multi-Format Ingestion</span>
+                  </div>
+                  <span class="spec-type">Parse &amp; Dedupe</span>
+                </div>
+                <p class="spec-summary">Parses PDF, DOCX, TXT documents with structure extraction and cryptographic deduplication.</p>
+                <div class="spec-breakdown">
+                  <div class="spec-field">
+                    <span class="spec-label">Engineering Rationale</span>
+                    <span class="spec-val">Re-uploading folders costs zero compute because SHA-256 checksums identify and skip untouched files.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Input / Output Boundary</span>
+                    <span class="spec-val">Raw PDF/DOCX/TXT files → Normalized text blocks with metadata headers.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Safeguard / Metric</span>
+                    <span class="spec-val metric">100% duplicate suppression; zero wasted embedding calls.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Spec Card 2 -->
+              <div class="spec-card">
+                <div class="spec-header">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="spec-num">02</span>
+                    <span class="spec-name">Semantic Chunking</span>
+                  </div>
+                  <span class="spec-type">Structure-Aware</span>
+                </div>
+                <p class="spec-summary">Splits at clause, heading, and table boundaries rather than arbitrary token cuts.</p>
+                <div class="spec-breakdown">
+                  <div class="spec-field">
+                    <span class="spec-label">Engineering Rationale</span>
+                    <span class="spec-val">Fixed token windows slice definitions in half. Preserving clause boundaries ensures full context per chunk.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Input / Output Boundary</span>
+                    <span class="spec-val">Parsed document trees → 512-token semantic chunks with heading context.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Safeguard / Metric</span>
+                    <span class="spec-val metric">Preserves clause integrity; zero split definitions across chunks.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Spec Card 3 -->
+              <div class="spec-card">
+                <div class="spec-header">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="spec-num">03</span>
+                    <span class="spec-name">Hybrid Indexing &amp; RBAC</span>
+                  </div>
+                  <span class="spec-type">Dual Store + ACL</span>
+                </div>
+                <p class="spec-summary">Builds dense vector indices in FAISS and sparse inverted indices in BM25 with role access controls.</p>
+                <div class="spec-breakdown">
+                  <div class="spec-field">
+                    <span class="spec-label">Engineering Rationale</span>
+                    <span class="spec-val">Vectors capture conceptual meaning while BM25 preserves exact product codes, IDs, and acronyms.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Input / Output Boundary</span>
+                    <span class="spec-val">Semantic chunks → FAISS HNSW index + BM25 index + Role ACL tags.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Safeguard / Metric</span>
+                    <span class="spec-val metric">Fail-closed ACL tagging bound at the index partition layer.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TRACK B SPECS -->
+          <div class="workflow-track">
+            <div class="track-header">
+              <div class="track-title">
+                <span class="track-tag">B</span>
+                <span>Online Query &amp; Fail-Closed Retrieval Specifications</span>
+              </div>
+              <span class="track-pill">5 Pipeline Stages · 2–5s Latency</span>
+            </div>
+
+            <div class="specs-grid">
+              <!-- Spec Card 4 -->
+              <div class="spec-card">
+                <div class="spec-header">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="spec-num">04</span>
+                    <span class="spec-name">Query Intent Router</span>
+                  </div>
+                  <span class="spec-type">Fast Classifier</span>
+                </div>
+                <p class="spec-summary">Classifies queries before retrieval: answers small talk directly and applies ingress guardrails.</p>
+                <div class="spec-breakdown">
+                  <div class="spec-field">
+                    <span class="spec-label">Engineering Rationale</span>
+                    <span class="spec-val">Chit-chat does not require search. Routing saves latency, compute, and keeps guardrails centralized.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Input / Output Boundary</span>
+                    <span class="spec-val">User prompt → Route decision [Document Search | Small Talk | Guardrail Block].</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Safeguard / Metric</span>
+                    <span class="spec-val metric">Sub-60ms routing latency; protects retrieval budget.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Spec Card 5 -->
+              <div class="spec-card">
+                <div class="spec-header">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="spec-num">05</span>
+                    <span class="spec-name">Pre-Retrieval Access Filter</span>
+                  </div>
+                  <span class="spec-type">Security Gate</span>
+                </div>
+                <p class="spec-summary">Resolves requester JWT roles and filters document IDs before any vector or keyword search runs.</p>
+                <div class="spec-breakdown">
+                  <div class="spec-field">
+                    <span class="spec-label">Engineering Rationale</span>
+                    <span class="spec-val">Post-filtering is too late because secret text enters prompt context. Filtering upfront prevents leakage.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Input / Output Boundary</span>
+                    <span class="spec-val">Requester JWT + Query → Whitelisted document ID partitions.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Safeguard / Metric</span>
+                    <span class="spec-val metric">0 unauthorized document leaks across 200+ permission test cases.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Spec Card 6 -->
+              <div class="spec-card">
+                <div class="spec-header">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="spec-num">06</span>
+                    <span class="spec-name">Hybrid Search &amp; RRF</span>
+                  </div>
+                  <span class="spec-type">Parallel Search</span>
+                </div>
+                <p class="spec-summary">Runs parallel FAISS dense search and BM25 sparse search, fused via Reciprocal Rank Fusion.</p>
+                <div class="spec-breakdown">
+                  <div class="spec-field">
+                    <span class="spec-label">Engineering Rationale</span>
+                    <span class="spec-val">Dense embeddings catch paraphrased questions while BM25 locks onto exact policy codes and names.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Input / Output Boundary</span>
+                    <span class="spec-val">Query + Allowed partition → Top 30 candidate passages ranked by RRF score.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Safeguard / Metric</span>
+                    <span class="spec-val metric">Consistently ranks target source in top 5 retrieval candidates.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Spec Card 7 -->
+              <div class="spec-card">
+                <div class="spec-header">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="spec-num">07</span>
+                    <span class="spec-name">Neural Cross-Encoder</span>
+                  </div>
+                  <span class="spec-type">Re-Ranking</span>
+                </div>
+                <p class="spec-summary">Joint cross-attention re-ranks query-passage candidate pairs to prune low-relevance distractions.</p>
+                <div class="spec-breakdown">
+                  <div class="spec-field">
+                    <span class="spec-label">Engineering Rationale</span>
+                    <span class="spec-val">Bi-encoders miss nuances. Cross-encoders examine full cross-attention, cutting irrelevant chunks.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Input / Output Boundary</span>
+                    <span class="spec-val">Top 30 RRF candidates → Top 5 high-confidence verified chunks.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Safeguard / Metric</span>
+                    <span class="spec-val metric">~20% reduction in hallucinations; answer precision up ~15–20%.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Spec Card 8 -->
+              <div class="spec-card">
+                <div class="spec-header">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="spec-num">08</span>
+                    <span class="spec-name">LLM Synthesis &amp; Citations</span>
+                  </div>
+                  <span class="spec-type">Synthesis Engine</span>
+                </div>
+                <p class="spec-summary">Provider-agnostic LLM generates concise answers where every statement binds to verified citation badges.</p>
+                <div class="spec-breakdown">
+                  <div class="spec-field">
+                    <span class="spec-label">Engineering Rationale</span>
+                    <span class="spec-val">Every answer cites its exact page. If no authorized source exists, it refuses to guess.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Input / Output Boundary</span>
+                    <span class="spec-val">Top 5 chunks + user prompt → Grounded answer with clickable citation badges.</span>
+                  </div>
+                  <div class="spec-field">
+                    <span class="spec-label">Safeguard / Metric</span>
+                    <span class="spec-val metric">No authorized source = refusal to invent; 100% citation traceability.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engineering Decisions -->
+    <section style="max-width: 1200px; margin: 0px auto; padding: clamp(72px, 9vw, 120px) clamp(16px, 4vw, 40px) 0px;">
+      <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #0F6E6E; margin-bottom: 12px; line-height: 1.05;">Engineering Decisions</h2>
+      <p data-reveal="clip" style="font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.25; color: #16181D; text-wrap: balance;">The calls that shaped it.</p>
+      
+      <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr)); gap: 20px;">
+        <article data-reveal="scale" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+          <h3 style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em;">Filter before retrieval, not after</h3>
+          <p style="font-size: 16px; line-height: 1.6; color: rgb(58, 61, 68);">Post-filtering generated answers is too late: the restricted text has already been in the prompt. Resolving access first, and failing closed when it can't be resolved, makes leaks structurally impossible rather than unlikely.</p>
+        </article>
+        <article data-reveal="scale" data-reveal-delay="120" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+          <h3 style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em;">Hybrid over pure vector search</h3>
+          <p style="font-size: 16px; line-height: 1.6; color: rgb(58, 61, 68);">Company documents are full of acronyms, product codes and policy numbers. Dense vectors handle paraphrase; BM25 handles the exact terms. RRF combines both without hand-tuned weights.</p>
+        </article>
+        <article data-reveal="scale" data-reveal-delay="240" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+          <h3 style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em;">Route before you retrieve</h3>
+          <p style="font-size: 16px; line-height: 1.6; color: rgb(58, 61, 68);">Not every message needs a search. Classifying intent first saves latency and tokens on small talk and product-help questions, and gives one clear place to enforce guardrails.</p>
+        </article>
+        <article data-reveal="scale" data-reveal-delay="360" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+          <h3 style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em;">Provider-agnostic LLM layer</h3>
+          <p style="font-size: 16px; line-height: 1.6; color: rgb(58, 61, 68);">One interface over Groq, OpenAI, Gemini and Ollama, so the model can be swapped for cost, latency or data-residency reasons without touching retrieval.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Production Readiness -->
+    <section style="max-width: 1200px; margin: 0px auto; padding: clamp(72px, 9vw, 120px) clamp(16px, 4vw, 40px) 0px; display: flex; flex-wrap: wrap; gap: 32px 64px;">
+      <div data-reveal="left" style="flex: 1 1 280px;">
+        <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #0F6E6E; margin-bottom: 12px; line-height: 1.05;">Production Readiness</h2>
+        <p data-reveal="clip" style="font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.25; color: #16181D; text-wrap: balance;">Built to run, not to demo.</p>
+      </div>
+      <ul style="flex: 999 1 560px; min-width: 0px; padding: 0px; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 0px 32px;">
+        <li data-reveal="up" data-reveal-delay="120" style="border-top: 1px solid rgb(222, 218, 210); padding: 18px 0px;">
+          <p style="font-weight: 600;">Auth &amp; access</p>
+          <p style="margin-top: 6px; font-size: 15px; line-height: 1.55; color: rgb(58, 61, 68);">JWT auth, RBAC across 4 roles, rate limiting.</p>
+        </li>
+        <li data-reveal="up" data-reveal-delay="120" style="border-top: 1px solid rgb(222, 218, 210); padding: 18px 0px;">
+          <p style="font-weight: 600;">Containers</p>
+          <p style="margin-top: 6px; font-size: 15px; line-height: 1.55; color: rgb(58, 61, 68);">Docker Compose, non-root images, health checks.</p>
+        </li>
+        <li data-reveal="up" data-reveal-delay="120" style="border-top: 1px solid rgb(222, 218, 210); padding: 18px 0px;">
+          <p style="font-weight: 600;">Data</p>
+          <p style="margin-top: 6px; font-size: 15px; line-height: 1.55; color: rgb(58, 61, 68);">PostgreSQL with Alembic migrations; incremental index updates.</p>
+        </li>
+        <li data-reveal="up" data-reveal-delay="120" style="border-top: 1px solid rgb(222, 218, 210); padding: 18px 0px;">
+          <p style="font-weight: 600;">Tests</p>
+          <p style="margin-top: 6px; font-size: 15px; line-height: 1.55; color: rgb(58, 61, 68);">PyTest on the backend plus frontend test suites.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Footer CTA -->
+    <section style="margin-top: clamp(80px, 10vw, 136px); background: rgb(22, 24, 29); color: rgb(232, 233, 236);">
+      <div style="max-width: 1200px; margin: 0px auto; padding: clamp(64px, 8vw, 104px) clamp(16px, 4vw, 40px) 48px;">
+        <h2 data-reveal="clip" style="font-size: clamp(32px, 4.4vw, 56px); letter-spacing: -0.035em; font-weight: 600; line-height: 1.05; color: rgb(255, 255, 255); max-width: 20ch;">Need a knowledge assistant your team can trust?</h2>
+        <div data-reveal="up" data-reveal-delay="200" style="margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+          <a href="mailto:ajeetsingh7632@gmail.com" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0px 24px; background: rgb(255, 255, 255); color: rgb(22, 24, 29); border-radius: 999px; text-decoration: none; font-weight: 500;">Email me</a>
+          <button type="button" class="copy-btn" data-copy="ajeetsingh7632@gmail.com" aria-label="Copy email address to clipboard">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copy email</span>
+          </button>
+          <a href="document-intelligence.html" class="onDark" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0px 24px; border: 1px solid rgb(58, 63, 72); border-radius: 999px; font-weight: 500;">Next: Document Intelligence →</a>
+        </div>
+        <footer style="margin-top: clamp(64px, 8vw, 104px); border-top: 1px solid rgb(42, 46, 54); padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: rgb(138, 144, 156);">
+          <p>© 2026 Ajeet Singh · Bengaluru, India</p>
+          <a href="index.html" class="onDark" style="font-size: 14px;">Back to home</a>
+        </footer>
+      </div>
+    </section>
+  </main>
+</div>
+</div>
+
+<!-- Toast Notification Container -->
+<div class="toast-container" id="toastContainer" role="status" aria-live="polite">
+  <div class="toast-body">
+    <span class="toast-check">✓</span>
+    <span id="toastMessage">Copied to clipboard!</span>
+  </div>
+</div>
+
+<!-- Fullscreen High-Res Lightbox Modal -->
+<div class="showcase-lightbox" id="showcaseLightbox" role="dialog" aria-modal="true" aria-label="Fullscreen Screenshot Preview">
+  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+  <div class="lightbox-content">
+    <div class="lightbox-header">
+      <span class="lightbox-title" id="lightboxTitle">Screenshot Preview</span>
+      <div class="lightbox-actions">
+        <a id="lightboxDownloadBtn" href="#" target="_blank" download class="lightbox-btn" title="Download High-Res Screenshot">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </a>
+        <button type="button" class="lightbox-btn" id="lightboxCloseBtn" title="Close (Esc)" aria-label="Close Lightbox">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+    <div class="lightbox-viewport" id="lightboxViewport">
+      <img id="lightboxImg" src="" alt="Fullscreen Screenshot Preview">
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS: SLIDER, FLOWCHART, VIDEO SWITCHER, TOAST -->
+<script>
+// 1. Progress Bar & Reveal on Scroll
+(function () {
+  var bar = document.querySelector('[data-progress]');
+  function onScroll() {
+    if (!bar) return;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0) + ')';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+
+  var counters = [].slice.call(document.querySelectorAll('[data-count]'));
+  var cio = new IntersectionObserver(function (es) {
+    es.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var el = en.target, target = parseFloat(el.getAttribute('data-count')) || 0, t0 = performance.now();
+      cio.unobserve(el);
+      (function step(now) {
+        var p = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = p < 1 ? String(Math.round(target * e)) : String(target);
+        if (p < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }, { threshold: 0.6 });
+  counters.forEach(function (c) { cio.observe(c); });
+
+  var nodes = [].slice.call(document.querySelectorAll('[data-reveal]'));
+  var start = { up: 'translateY(32px)', left: 'translateX(-40px)', right: 'translateX(40px)', scale: 'translateY(20px) scale(0.96)', fade: 'none' };
+  function delayOf(n) { return parseInt(n.getAttribute('data-reveal-delay') || '0', 10) || 0; }
+  function reset(n) { n.style.transition = ''; n.style.opacity = ''; n.style.transform = ''; n.style.clipPath = ''; }
+  function show(n) {
+    if (n.__shown) return; n.__shown = true;
+    n.style.opacity = '1'; n.style.transform = 'none'; n.style.clipPath = 'inset(0 0 0 0)';
+    setTimeout(function () { reset(n); }, delayOf(n) + 1200);
+  }
+  nodes.forEach(function (n) {
+    var k = n.getAttribute('data-reveal') || 'up';
+    if (k === 'clip') n.style.clipPath = 'inset(0 100% 0 0)';
+    else { n.style.opacity = '0'; n.style.transform = start[k] || start.up; }
+  });
+  void document.body.offsetHeight;
+  nodes.forEach(function (n) {
+    var d = delayOf(n) + 'ms';
+    n.style.transition = 'opacity .7s ease ' + d + ', transform .9s cubic-bezier(.16,1,.3,1) ' + d + ', clip-path 1s cubic-bezier(.77,0,.18,1) ' + d;
+  });
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (en) { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } });
+  }, { threshold: 0.05, rootMargin: '120px 0px 120px 0px' });
+  nodes.forEach(function (n) { io.observe(n); });
+})();
+
+// 2. Interactive Media Showcase Slider Logic + Video Clip Switcher
+(function () {
+  var slideData = [
+    {
+      badge: '1080p 60fps Trailer',
+      title: 'Knowra Official Showcase Trailer',
+      desc: 'Comprehensive walkthrough demonstrating cited QA, permission enforcement, and passage highlight exploration.'
+    },
+    {
+      badge: 'Interactive QA',
+      title: 'Cited Chat & Exact Passage Highlighting',
+      desc: 'Users ask questions in natural language; answers reference numbered citations that open the exact document page.'
+    },
+    {
+      badge: 'Document Ops',
+      title: 'Document Management & Access Groups',
+      desc: 'Incremental processing with SHA-256 deduplication and collection-level permission boundaries.'
+    },
+    {
+      badge: 'Telemetry & Ops',
+      title: 'Knowledge Base Dashboard & Analytics',
+      desc: 'Real-time monitoring of query volume, latency percentiles, top-retrieved documents, and model usage.'
+    },
+    {
+      badge: 'Security Governance',
+      title: 'Role-Based Access Control (RBAC) Console',
+      desc: 'Fail-closed permission matrices ensure users only ever search and retrieve documents they are explicitly allowed to see.'
+    }
+  ];
+
+  var currentIndex = 0;
+  var totalSlides = slideData.length;
+  var tabs = [].slice.call(document.querySelectorAll('.showcase-tab'));
+  var slides = [].slice.call(document.querySelectorAll('.showcase-slide'));
+  var dots = [].slice.call(document.querySelectorAll('.indicator-dot'));
+  var currentNumEl = document.getElementById('currentSlideNum');
+  var totalNumEl = document.getElementById('totalSlideNum');
+  var badgeEl = document.getElementById('slideBadge');
+  var titleEl = document.getElementById('slideTitle');
+  var descEl = document.getElementById('slideDesc');
+  var prevBtn = document.getElementById('prevSlideBtn');
+  var nextBtn = document.getElementById('nextSlideBtn');
+  var video = document.getElementById('knowraTrailerVideo');
+  var vswitchBar = document.getElementById('videoSwitcherBar');
+  var vswitchBtns = [].slice.call(document.querySelectorAll('.vswitch-pill'));
+
+  // Image Zoom & Pan Elements
+  var zoomControls = document.getElementById('stageZoomControls');
+  var zoomInBtn = document.getElementById('zoomInBtn');
+  var zoomOutBtn = document.getElementById('zoomOutBtn');
+  var zoomResetBtn = document.getElementById('zoomResetBtn');
+  var zoomLightboxBtn = document.getElementById('zoomLightboxBtn');
+  var zoomBadge = document.getElementById('zoomLevelBadge');
+  var zoomHint = document.getElementById('zoomHintPill');
+
+  // High-Res Lightbox Elements
+  var lightbox = document.getElementById('showcaseLightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxTitle = document.getElementById('lightboxTitle');
+  var lightboxClose = document.getElementById('lightboxCloseBtn');
+  var lightboxBackdrop = document.getElementById('lightboxBackdrop');
+  var lightboxDownload = document.getElementById('lightboxDownloadBtn');
+
+  // In-container Zoom & Pan State (strictly applied only to pictures, never video)
+  var currentZoom = 1.0;
+  var panX = 0;
+  var panY = 0;
+  var isDragging = false;
+  var dragStartX = 0;
+  var dragStartY = 0;
+  var stageEl = document.getElementById('showcaseStage');
+
+  function getActiveImg() {
+    var activeSlide = slides[currentIndex];
+    return (activeSlide && activeSlide.getAttribute('data-type') === 'image') ? activeSlide.querySelector('img') : null;
+  }
+
+  function applyZoomTransform(instant) {
+    var img = getActiveImg();
+    if (!img) return;
+    img.style.transition = instant ? 'none' : 'transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1)';
+    if (currentZoom <= 1.001) {
+      img.style.transform = 'none';
+      img.style.cursor = 'zoom-in';
+      panX = 0;
+      panY = 0;
+    } else {
+      var stageRect = stageEl ? stageEl.getBoundingClientRect() : { width: 1120, height: 630 };
+      var maxPanX = Math.max(0, (stageRect.width * (currentZoom - 1)) / 2);
+      var maxPanY = Math.max(0, (stageRect.height * (currentZoom - 1)) / 2);
+      panX = Math.max(-maxPanX, Math.min(maxPanX, panX));
+      panY = Math.max(-maxPanY, Math.min(maxPanY, panY));
+      img.style.transform = 'translate(' + panX + 'px, ' + panY + 'px) scale(' + currentZoom + ')';
+      img.style.cursor = isDragging ? 'grabbing' : 'grab';
+    }
+    if (zoomBadge) zoomBadge.textContent = Math.round(currentZoom * 100) + '%';
+  }
+
+  function setZoom(newZoom, instant) {
+    if (currentIndex === 0) return; // Do not zoom video
+    currentZoom = Math.max(1.0, Math.min(3.0, Math.round(newZoom * 100) / 100));
+    if (currentZoom <= 1.0) {
+      panX = 0;
+      panY = 0;
+    }
+    applyZoomTransform(instant);
+  }
+
+  function resetZoom() {
+    slides.forEach(function (s) {
+      var im = s.querySelector('img');
+      if (im) {
+        im.style.transform = 'none';
+        im.style.cursor = 'zoom-in';
+      }
+    });
+    currentZoom = 1.0;
+    panX = 0;
+    panY = 0;
+    if (zoomBadge) zoomBadge.textContent = '100%';
+  }
+
+  if (totalNumEl) totalNumEl.textContent = String(totalSlides);
+
+  function goToSlide(index) {
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+    
+    // Pause video if moving away from slide 0
+    if (currentIndex === 0 && index !== 0 && video && !video.paused) {
+      video.pause();
+    }
+
+    currentIndex = index;
+
+    // Reset zoom when navigating slides
+    resetZoom();
+
+    // Toggle zoom controls (hidden on video slide 0, visible on picture slides 1-4)
+    if (currentIndex === 0) {
+      if (zoomControls) zoomControls.style.display = 'none';
+      if (zoomHint) zoomHint.style.display = 'none';
+    } else {
+      if (zoomControls) zoomControls.style.display = 'flex';
+      if (zoomHint) zoomHint.style.display = 'inline-flex';
+    }
+
+    // Update slides
+    slides.forEach(function (s, i) {
+      if (i === currentIndex) s.classList.add('active');
+      else s.classList.remove('active');
+    });
+
+    // Update tabs
+    tabs.forEach(function (t, i) {
+      var active = (i === currentIndex);
+      if (active) t.classList.add('active');
+      else t.classList.remove('active');
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    // Update dots
+    dots.forEach(function (d, i) {
+      if (i === currentIndex) d.classList.add('active');
+      else d.classList.remove('active');
+    });
+
+    // Update caption info
+    if (currentNumEl) currentNumEl.textContent = String(currentIndex + 1);
+    var info = slideData[currentIndex];
+    if (info) {
+      if (badgeEl) badgeEl.textContent = info.badge;
+      if (titleEl) titleEl.textContent = info.title;
+      if (descEl) descEl.textContent = info.desc;
+    }
+  }
+
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var idx = parseInt(t.getAttribute('data-slide') || '0', 10);
+      goToSlide(idx);
+    });
+  });
+
+  dots.forEach(function (d) {
+    d.addEventListener('click', function () {
+      var idx = parseInt(d.getAttribute('data-slide') || '0', 10);
+      goToSlide(idx);
+    });
+  });
+
+  if (prevBtn) prevBtn.addEventListener('click', function () { goToSlide(currentIndex - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { goToSlide(currentIndex + 1); });
+
+  // Zoom button click events
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setZoom(currentZoom + 0.5);
+    });
+  }
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setZoom(currentZoom - 0.5);
+    });
+  }
+  if (zoomResetBtn) {
+    zoomResetBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setZoom(1.0);
+    });
+  }
+  if (zoomLightboxBtn) {
+    zoomLightboxBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      openLightbox();
+    });
+  }
+
+  function openLightbox() {
+    var img = getActiveImg();
+    if (!img) return;
+    if (lightboxImg) lightboxImg.src = img.currentSrc || img.src;
+    if (lightboxTitle) lightboxTitle.textContent = slideData[currentIndex].title;
+    if (lightboxDownload) lightboxDownload.href = img.currentSrc || img.src;
+    if (lightbox) {
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeLightbox() {
+    if (lightbox) {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lightbox && lightbox.classList.contains('open')) {
+      closeLightbox();
+    }
+  });
+
+  // Stage interactions for images (Double click, Mouse wheel, Click-drag pan)
+  if (stageEl) {
+    // Double click to toggle 2x zoom on pictures
+    stageEl.addEventListener('dblclick', function (e) {
+      if (currentIndex === 0) return; // Skip video
+      if (e.target.closest('.stage-zoom-controls') || e.target.closest('.showcase-arrow')) return;
+      if (currentZoom <= 1.05) {
+        setZoom(2.0);
+      } else {
+        setZoom(1.0);
+      }
+    });
+
+    // Drag to pan zoomed image
+    stageEl.addEventListener('mousedown', function (e) {
+      if (currentIndex === 0 || currentZoom <= 1.0) return;
+      if (e.target.closest('.stage-zoom-controls') || e.target.closest('.showcase-arrow')) return;
+      isDragging = true;
+      dragStartX = e.clientX - panX;
+      dragStartY = e.clientY - panY;
+      applyZoomTransform(true);
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', function (e) {
+      if (!isDragging || currentIndex === 0) return;
+      panX = e.clientX - dragStartX;
+      panY = e.clientY - dragStartY;
+      applyZoomTransform(true);
+    });
+
+    window.addEventListener('mouseup', function () {
+      if (isDragging) {
+        isDragging = false;
+        applyZoomTransform(false);
+      }
+    });
+
+    // Mouse wheel zoom inside container
+    stageEl.addEventListener('wheel', function (e) {
+      if (currentIndex === 0) return; // Do not zoom video
+      if (e.ctrlKey || currentZoom > 1.05) {
+        e.preventDefault();
+        var step = (e.deltaY < 0) ? 0.25 : -0.25;
+        setZoom(currentZoom + step);
+      }
+    }, { passive: false });
+
+    // Touch events for mobile
+    var startX = 0;
+    stageEl.addEventListener('touchstart', function (e) {
+      if (e.touches && e.touches.length > 0) startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    stageEl.addEventListener('touchend', function (e) {
+      if (currentZoom > 1.05) return; // Don't swipe slide while zoomed
+      if (e.changedTouches && e.changedTouches.length > 0) {
+        var diffX = e.changedTouches[0].clientX - startX;
+        if (diffX > 45) goToSlide(currentIndex - 1);
+        else if (diffX < -45) goToSlide(currentIndex + 1);
+      }
+    }, { passive: true });
+  }
+
+  // Video switcher pills inside slide 0
+  vswitchBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      vswitchBtns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      var newSrc = btn.getAttribute('data-vsrc');
+      var badge = btn.getAttribute('data-badge');
+      var title = btn.getAttribute('data-title');
+      var desc = btn.getAttribute('data-desc');
+
+      if (video && newSrc) {
+        var wasPlaying = !video.paused;
+        video.src = newSrc;
+        video.load();
+        if (wasPlaying) video.play();
+      }
+
+      if (badgeEl && badge) badgeEl.textContent = badge;
+      if (titleEl && title) titleEl.textContent = title;
+      if (descEl && desc) descEl.textContent = desc;
+    });
+  });
+
+  // Keyboard navigation when showcase is in focus or hovered
+  var showcaseEl = document.getElementById('knowraShowcase');
+  if (showcaseEl) {
+    showcaseEl.setAttribute('tabindex', '0');
+    showcaseEl.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { goToSlide(currentIndex - 1); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { goToSlide(currentIndex + 1); e.preventDefault(); }
+    });
+  }
+})();
+
+// 3. Architecture Flowchart View Toggle (Workflow Flowchart vs Detailed Specs)
+(function () {
+  var btnFlowchart = document.getElementById('btnViewFlowchart');
+  var btnTable = document.getElementById('btnViewTable');
+  var viewFlowchart = document.getElementById('viewFlowchart');
+  var viewTable = document.getElementById('viewTable');
+
+  if (btnFlowchart && btnTable && viewFlowchart && viewTable) {
+    btnFlowchart.addEventListener('click', function () {
+      btnFlowchart.classList.add('active');
+      btnTable.classList.remove('active');
+      viewFlowchart.style.display = 'flex';
+      viewTable.style.display = 'none';
+    });
+
+    btnTable.addEventListener('click', function () {
+      btnTable.classList.add('active');
+      btnFlowchart.classList.remove('active');
+      viewFlowchart.style.display = 'none';
+      viewTable.style.display = 'flex';
+    });
+  }
+})();
+
+// 4. Copy Email to Clipboard & Toast System
+(function () {
+  var toast = document.getElementById('toastContainer');
+  var toastMsg = document.getElementById('toastMessage');
+  var timer = null;
+
+  function showToast(msg) {
+    if (toastMsg) toastMsg.textContent = msg;
+    if (toast) {
+      toast.classList.add('show');
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        toast.classList.remove('show');
+      }, 2600);
+    }
+  }
+
+  var copyBtns = [].slice.call(document.querySelectorAll('[data-copy]'));
+  copyBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      if (!text) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          showToast(text + ' copied to clipboard!');
+        }).catch(function () {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    });
+  });
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      showToast(text + ' copied to clipboard!');
+    } catch (e) {
+      showToast('Could not copy automatically');
+    }
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+</body>
+</html>

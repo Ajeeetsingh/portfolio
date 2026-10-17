@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#16181D" />
+      <stop offset="100%" stop-color="#0E1013" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F6E6E" />
+      <stop offset="100%" stop-color="#2FA59A" />
+    </linearGradient>
+    <radialGradient id="glow" cx="80%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#0F6E6E" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="gridDots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1.2" fill="#3A3D44" opacity="0.4" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+  <rect width="1200" height="630" fill="url(#gridDots)" />
+
+  <!-- Outer Border Frame -->
+  <rect x="30" y="30" width="1140" height="570" rx="24" fill="none" stroke="#2B2F37" stroke-width="1.5" />
+
+  <!-- Avatar & Name Header -->
+  <g transform="translate(80, 90)">
+    <!-- Badge -->
+    <rect width="180" height="36" rx="18" fill="#11403D" stroke="#1F6E6A" stroke-width="1" />
+    <circle cx="18" cy="18" r="4.5" fill="#6CC5B9" />
+    <text x="32" y="23" font-family="'Geist', 'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#9FD8D0" letter-spacing="0.04em">AI/ML ENGINEER</text>
+
+    <!-- Headline -->
+    <text x="0" y="95" font-family="'Geist', 'Segoe UI', sans-serif" font-size="54" font-weight="700" fill="#FFFFFF" letter-spacing="-0.03em">Ajeet Singh</text>
+    <text x="0" y="145" font-family="'Geist', 'Segoe UI', sans-serif" font-size="28" font-weight="400" fill="#9CA3AF">Production Generative AI, RAG &amp; Document Intelligence</text>
+  </g>
+
+  <!-- Key Highlights Pills -->
+  <g transform="translate(80, 290)">
+    <rect x="0" y="0" width="220" height="46" rx="10" fill="#1F232B" stroke="#313642" />
+    <text x="18" y="29" font-family="'Geist Mono', monospace" font-size="15" fill="#6CC5B9">✓ Permission-Aware RAG</text>
+
+    <rect x="236" y="0" width="220" height="46" rx="10" fill="#1F232B" stroke="#313642" />
+    <text x="254" y="29" font-family="'Geist Mono', monospace" font-size="15" fill="#6CC5B9">✓ Multi-Agent LangGraph</text>
+
+    <rect x="472" y="0" width="240" height="46" rx="10" fill="#1F232B" stroke="#313642" />
+    <text x="490" y="29" font-family="'Geist Mono', monospace" font-size="15" fill="#6CC5B9">✓ Multimodal CV + VLMs</text>
+
+    <rect x="728" y="0" width="210" height="46" rx="10" fill="#1F232B" stroke="#313642" />
+    <text x="746" y="29" font-family="'Geist Mono', monospace" font-size="15" fill="#6CC5B9">✓ AWS SageMaker &amp; EC2</text>
+  </g>
+
+  <!-- Metrics Bar -->
+  <g transform="translate(80, 390)">
+    <rect width="1040" height="130" rx="16" fill="#171A21" stroke="#2B2F37" />
+
+    <!-- Metric 1 -->
+    <g transform="translate(40, 35)">
+      <text x="0" y="36" font-family="'Geist', 'Segoe UI', sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">4<tspan fill="#2FA59A"> yrs</tspan></text>
+      <text x="0" y="65" font-family="'Geist', 'Segoe UI', sans-serif" font-size="15" fill="#9CA3AF">Building ML &amp; AI Systems</text>
+    </g>
+
+    <!-- Metric 2 -->
+    <g transform="translate(300, 35)">
+      <text x="0" y="36" font-family="'Geist', 'Segoe UI', sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">10</text>
+      <text x="0" y="65" font-family="'Geist', 'Segoe UI', sans-serif" font-size="15" fill="#9CA3AF">AI Engineers Led (Lead)</text>
+    </g>
+
+    <!-- Metric 3 -->
+    <g transform="translate(540, 35)">
+      <text x="0" y="36" font-family="'Geist', 'Segoe UI', sans-serif" font-size="44" font-weight="700" fill="#FFFFFF"><tspan fill="#2FA59A">~</tspan>80<tspan fill="#2FA59A">%</tspan></text>
+      <text x="0" y="65" font-family="'Geist', 'Segoe UI', sans-serif" font-size="15" fill="#9CA3AF">Manual Effort Cut (IDA)</text>
+    </g>
+
+    <!-- Metric 4 -->
+    <g transform="translate(800, 35)">
+      <text x="0" y="36" font-family="'Geist', 'Segoe UI', sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">0<tspan fill="#2FA59A" font-size="24"> / 200+</tspan></text>
+      <text x="0" y="65" font-family="'Geist', 'Segoe UI', sans-serif" font-size="15" fill="#9CA3AF">Leaks in RBAC Tests</text>
+    </g>
+  </g>
+
+  <!-- Footer Link -->
+  <g transform="translate(80, 560)">
+    <text x="0" y="0" font-family="'Geist Mono', monospace" font-size="15" fill="#71717A">Bengaluru, India · github.com/Ajeeetsingh</text>
+  </g>
+</svg>

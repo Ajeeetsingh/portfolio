@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajeet Singh | AI/ML Engineer</title>
+<meta name="description" content="Ajeet Singh, AI/ML Engineer in Bengaluru building production Generative AI, RAG, multi-agent and document-intelligence systems.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<!-- OpenGraph / Social Cards -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ajeet Singh | AI/ML Engineer">
+<meta property="og:description" content="Ajeet Singh, AI/ML Engineer in Bengaluru building production Generative AI, RAG, multi-agent and document-intelligence systems.">
+<meta property="og:image" content="assets/og-image.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ajeet Singh | AI/ML Engineer">
+<meta name="twitter:description" content="Ajeet Singh, AI/ML Engineer in Bengaluru building production Generative AI, RAG, multi-agent and document-intelligence systems.">
+<meta name="twitter:image" content="assets/og-image.svg">
+<meta name="theme-color" content="#F4F2EE">
+
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Ajeet Singh",
+  "jobTitle": "AI/ML Engineer",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bengaluru",
+    "addressCountry": "India"
+  },
+  "email": "ajeetsingh7632@gmail.com",
+  "url": "https://github.com/Ajeeetsingh",
+  "sameAs": [
+    "https://github.com/Ajeeetsingh",
+    "https://www.linkedin.com/in/ajeet-singh-66810616a"
+  ],
+  "knowsAbout": [
+    "Generative AI",
+    "Retrieval-Augmented Generation (RAG)",
+    "Multi-Agent Systems",
+    "Document Intelligence",
+    "FastAPI",
+    "LangGraph",
+    "Computer Vision",
+    "AWS SageMaker & Bedrock"
+  ]
+}
+</script>
+
+<style>
+/* Base Styles */
+body {
+  margin: 0;
+  background: #F4F2EE;
+  color: #16181D;
+  font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: #0F6E6E; text-decoration: none; }
+a:hover { color: #0B5252; }
+h1, h2, h3, h4, p, ul, ol { margin: 0; }
+.navlink { color: #3A3D44; text-decoration: none; }
+.navlink:hover { color: #16181D; }
+.btn-dark {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
+  background: #16181D; color: #FFFFFF; border-radius: 999px; text-decoration: none; font-weight: 500; font-size: 16px;
+  transition: background .2s ease;
+}
+.btn-dark:hover { background: #2B2F37 !important; }
+.btn-line {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
+  border: 1px solid #C4BFB5; color: #16181D; border-radius: 999px; text-decoration: none; font-weight: 500; font-size: 16px;
+  transition: border-color .2s ease, background .2s ease;
+}
+.btn-line:hover { border-color: #16181D !important; background: rgba(22, 24, 29, 0.03); }
+.arrow { text-decoration: none; font-weight: 500; }
+.arrow:hover { text-decoration: underline; text-underline-offset: 4px; }
+.role-btn { cursor: pointer; font: inherit; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+.onDark { color: #FFFFFF; text-decoration: none; }
+.onDark:hover { color: #9FD8D0; }
+.dots {
+  background-image: radial-gradient(rgba(22,24,29,.13) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.55) 60%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.55) 60%, transparent 100%);
+}
+.lift {
+  transition: transform .35s cubic-bezier(.16, 1, .3, 1), box-shadow .35s ease, border-color .35s ease;
+}
+.lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -28px rgba(22, 24, 29, .35);
+  border-color: #C4BFB5 !important;
+}
+.pulse { animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(15, 110, 110, .45); }
+  50% { box-shadow: 0 0 0 6px rgba(15, 110, 110, 0); }
+}
+.flow { animation: flow 3.2s ease-in-out infinite; }
+@keyframes flow { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+:focus-visible { outline: 2px solid #0F6E6E; outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .lift, .lift:hover { transition: none; transform: none; }
+  .pulse, .flow { animation: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fade { animation: fadeIn .35s ease; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Copy Email & Toast */
+.copy-btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #FFFFFF;
+  padding: 0 20px;
+  min-height: 48px;
+  border-radius: 999px;
+  transition: all .2s ease;
+}
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: #6CC5B9;
+  color: #6CC5B9;
+}
+.copy-btn-light {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  background: #FFFFFF;
+  border: 1px solid #C4BFB5;
+  color: #16181D;
+  padding: 0 20px;
+  min-height: 48px;
+  border-radius: 999px;
+  transition: all .2s ease;
+}
+.copy-btn-light:hover {
+  border-color: #0F6E6E;
+  color: #0F6E6E;
+  background: #F7FAF9;
+}
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  pointer-events: none;
+  transition: transform .3s cubic-bezier(.16, 1, .3, 1), opacity .3s ease;
+  transform: translateY(20px);
+  opacity: 0;
+}
+.toast-container.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.toast-body {
+  background: #16181D;
+  color: #FFFFFF;
+  border: 1px solid #2B2F37;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+  padding: 12px 20px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.toast-check {
+  color: #6CC5B9;
+  font-weight: 700;
+}
+</style>
+</head>
+<body>
+<div class="sc-host" data-sc-name="Main">
+<div style="background: rgb(244, 242, 238); color: rgb(22, 24, 29); min-height: 100vh;">
+  <!-- Scroll Progress Indicator -->
+  <div data-progress="bar" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; right: 0px; height: 3px; background: rgb(15, 110, 110); transform-origin: 0px 50%; transform: scaleX(0); z-index: 30;"></div>
+
+  <!-- Header -->
+  <header style="position: sticky; top: 0px; z-index: 10; background: rgba(244, 242, 238, 0.9); backdrop-filter: blur(8px); border-bottom: 1px solid rgb(222, 218, 210);">
+    <nav aria-label="Primary" style="max-width: 1200px; margin: 0px auto; padding: 16px clamp(16px, 4vw, 40px); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <a href="#top" class="navlink" style="display: flex; align-items: baseline; gap: 12px; text-decoration: none;">
+        <span style="font-weight: 600; font-size: 17px; letter-spacing: -0.01em; color: rgb(22, 24, 29);">Ajeet Singh</span>
+        <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: rgb(99, 102, 109);">AI/ML Engineer</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: clamp(14px, 2.4vw, 28px); flex-wrap: wrap; font-size: 15px;">
+        <a href="#work" class="navlink">Work</a>
+        <a href="#experience" class="navlink">Experience</a>
+        <a href="#skills" class="navlink">Skills</a>
+        <a href="#about" class="navlink">About</a>
+        <a href="#contact" class="navlink">Contact</a>
+        <a href="Ajeet-Singh-Resume.pdf" target="_blank" rel="noopener" class="btn-line" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0px 16px; border: 1px solid rgb(196, 191, 181); border-radius: 999px; color: rgb(22, 24, 29); text-decoration: none; font-weight: 500;">Résumé</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- Hero Section -->
+    <section style="position: relative; overflow: hidden;">
+      <div class="dots" aria-hidden="true" style="position: absolute; inset: 0px; pointer-events: none;"></div>
+      <div style="position: relative; max-width: 1200px; margin: 0px auto; padding: clamp(56px, 8vw, 104px) clamp(16px, 4vw, 40px) clamp(48px, 6vw, 72px); display: flex; flex-wrap: wrap; gap: 48px 56px; align-items: center;">
+        
+        <div style="flex: 999 1 520px; min-width: 0px;">
+          <!-- Profile Picture & Intro Tag -->
+          <div data-reveal="fade" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+            <div style="width: 58px; height: 58px; border-radius: 50%; overflow: hidden; border: 2px solid #0F6E6E; box-shadow: 0 4px 14px rgba(15, 110, 110, 0.25); flex-shrink: 0; background: #DDEDEA;">
+              <img src="assets/profile_imag.jpeg" alt="Ajeet Singh" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <p style="font-weight: 600; font-size: 16px;">Ajeet Singh</p>
+              <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: rgb(99, 102, 109);">AI/ML Engineer · Bengaluru, India</p>
+            </div>
+          </div>
+
+          <h1 data-reveal="up" data-reveal-delay="100" style="margin-top: 32px; font-size: clamp(40px, 5.6vw, 76px); line-height: 1.03; letter-spacing: -0.035em; font-weight: 600; max-width: 15ch; text-wrap: balance;">
+            I build production AI systems you can <span style="color: rgb(15, 110, 110); background: linear-gradient(transparent 68%, rgb(221, 237, 234) 68%);">verify</span>.
+          </h1>
+          
+          <p data-reveal="up" data-reveal-delay="220" style="margin-top: 28px; max-width: 54ch; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; color: rgb(58, 61, 68); text-wrap: pretty;">
+            Four years designing and shipping Generative AI, RAG, multi-agent and document-intelligence systems, from architecture to deployment on AWS.
+          </p>
+
+          <div data-reveal="up" data-reveal-delay="320" style="margin-top: 24px; display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border: 1px solid rgb(222, 218, 210); border-radius: 999px; background: rgb(251, 250, 247); font-size: 14px; color: rgb(58, 61, 68);">
+            <span class="pulse" aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: rgb(15, 110, 110); display: inline-block;"></span>
+            <span>Now: document intelligence for U.S. real estate records at IDA Automation</span>
+          </div>
+
+          <div data-reveal="up" data-reveal-delay="420" style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+            <a href="#work" class="btn-dark">See selected work</a>
+            <a href="#contact" class="btn-line">Get in touch</a>
+            <button type="button" class="copy-btn-light" data-copy="ajeetsingh7632@gmail.com" title="Copy email address">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy email</span>
+            </button>
+            <div style="display: flex; gap: 20px; margin-left: 8px; font-size: 15px;">
+              <a href="https://github.com/Ajeeetsingh" target="_blank" rel="noopener" class="arrow">GitHub ↗</a>
+              <a href="https://www.linkedin.com/in/ajeet-singh-66810616a" target="_blank" rel="noopener" class="arrow">LinkedIn ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Knowra Simulation Card -->
+        <div data-reveal="right" data-reveal-delay="300" style="flex: 1 1 400px; min-width: 0px; padding: clamp(20px, 2.6vw, 32px); background: rgb(22, 24, 29); color: rgb(232, 233, 236); border-radius: 18px; display: flex; flex-direction: column; gap: 18px; box-shadow: rgba(22, 24, 29, 0.55) 0px 40px 80px -48px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(108, 197, 185);">Knowra · try it</p>
+            <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: rgb(138, 144, 156);">Illustrative data</p>
+          </div>
+          <p style="font-size: 15px; color: rgb(184, 188, 198); line-height: 1.5;">Same question, four roles. Access rules decide what the model is allowed to read.</p>
+          <div role="group" aria-label="Ask as role" style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <button type="button" class="role-btn" aria-pressed="false" style="min-height: 44px; padding: 0px 16px; border-radius: 999px; font-size: 15px; font-weight: 500; border: 1px solid rgb(58, 63, 72); background: transparent; color: rgb(213, 216, 222);">Employee</button>
+            <button type="button" class="role-btn" aria-pressed="false" style="min-height: 44px; padding: 0px 16px; border-radius: 999px; font-size: 15px; font-weight: 500; border: 1px solid rgb(58, 63, 72); background: transparent; color: rgb(213, 216, 222);">HR</button>
+            <button type="button" class="role-btn" aria-pressed="true" style="min-height: 44px; padding: 0px 16px; border-radius: 999px; font-size: 15px; font-weight: 500; border: 1px solid rgb(108, 197, 185); background: rgb(108, 197, 185); color: rgb(12, 31, 29);">Finance</button>
+            <button type="button" class="role-btn" aria-pressed="false" style="min-height: 44px; padding: 0px 16px; border-radius: 999px; font-size: 15px; font-weight: 500; border: 1px solid rgb(58, 63, 72); background: transparent; color: rgb(213, 216, 222);">Admin</button>
+          </div>
+          <div style="border: 1px solid rgb(43, 47, 55); border-radius: 12px; background: rgb(29, 32, 38); padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+            <p style="font-size: 14px; color: rgb(163, 168, 179);">Asked as <span style="color: rgb(255, 255, 255); font-weight: 500;">Finance</span></p>
+            <p style="font-size: 17px; color: rgb(255, 255, 255); font-weight: 500; line-height: 1.4;">“What did we spend on contractors last quarter?”</p>
+            <div style="height: 1px; background: rgb(43, 47, 55);"></div>
+            <p class="fade" style="font-size: 15px; line-height: 1.6; color: rgb(213, 216, 222);">Q3 contractor spend was $412,800, about 6% above Q2, driven by two engineering contracts extended through September.</p>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; gap: 10px; align-items: center; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: rgb(159, 216, 208);">
+                <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 6px; background: rgb(17, 64, 61); color: rgb(159, 216, 208); font-size: 12px;">1</span>
+                <span>FY26 Contractor Ledger.xlsx · row 118</span>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: rgb(159, 216, 208);">
+                <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 6px; background: rgb(17, 64, 61); color: rgb(159, 216, 208); font-size: 12px;">2</span>
+                <span>Q3 Close Summary.pdf · p.4</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- At a Glance Metrics Strip -->
+    <section aria-label="At a glance" style="border-top: 1px solid rgb(222, 218, 210); border-bottom: 1px solid rgb(222, 218, 210); background: rgb(236, 233, 227);">
+      <div style="max-width: 1200px; margin: 0px auto; padding: 0px clamp(16px, 4vw, 40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));">
+        <div data-reveal="up" style="padding: 32px 24px 32px 0px;">
+          <p style="font-size: clamp(40px, 4.4vw, 56px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: rgb(22, 24, 29);"><span data-count="4">4</span><span style="color: rgb(15, 110, 110);"> yrs</span></p>
+          <p style="margin-top: 10px; font-size: 15px; line-height: 1.45; color: rgb(58, 61, 68);">Building software, ML and Generative AI systems</p>
+        </div>
+        <div data-reveal="up" data-reveal-delay="100" style="padding: 32px 24px 32px 0px;">
+          <p style="font-size: clamp(40px, 4.4vw, 56px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: rgb(22, 24, 29);"><span data-count="10">10</span></p>
+          <p style="margin-top: 10px; font-size: 15px; line-height: 1.45; color: rgb(58, 61, 68);">AI engineers led as Team Lead at HeyBobo</p>
+        </div>
+        <div data-reveal="up" data-reveal-delay="200" style="padding: 32px 24px 32px 0px;">
+          <p style="font-size: clamp(40px, 4.4vw, 56px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: rgb(22, 24, 29);"><span style="color: rgb(15, 110, 110);">~</span><span data-count="80">80</span><span style="color: rgb(15, 110, 110);">%</span></p>
+          <p style="margin-top: 10px; font-size: 15px; line-height: 1.45; color: rgb(58, 61, 68);">Less manual document processing with my extraction pipeline at IDA</p>
+        </div>
+        <div data-reveal="up" data-reveal-delay="300" style="padding: 32px 24px 32px 0px;">
+          <p style="font-size: clamp(40px, 4.4vw, 56px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: rgb(22, 24, 29);">0<span style="color: rgb(15, 110, 110); font-size: 0.5em; letter-spacing: -0.02em;"> / 200+</span></p>
+          <p style="margin-top: 10px; font-size: 15px; line-height: 1.45; color: rgb(58, 61, 68);">Restricted-document leaks across Knowra's permission tests</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 01: SELECTED WORK -->
+    <section id="work">
+      <div style="max-width: 1200px; margin: 0px auto; padding: clamp(64px, 8vw, 112px) clamp(16px, 4vw, 40px);">
+        <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #0F6E6E; margin-bottom: 12px; line-height: 1.05;">Selected Work</h2>
+        <p data-reveal="clip" style="font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.25; color: #16181D; max-width: 22ch;">Systems where every answer points back to its source.</p>
+
+        <!-- Featured Project: Knowra -->
+        <article data-reveal="scale" style="margin-top: 56px; border: 1px solid rgb(222, 218, 210); border-radius: 18px; overflow: hidden; display: flex; flex-wrap: wrap; background: rgb(251, 250, 247);">
+          <div data-reveal="left" data-reveal-delay="200" style="flex: 999 1 460px; min-width: 0px; padding: clamp(28px, 4vw, 48px); display: flex; flex-direction: column; gap: 20px;">
+            <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(99, 102, 109);">Featured · Personal project · 2026 to Present</p>
+            <div>
+              <h3 style="font-size: clamp(30px, 3.2vw, 40px); letter-spacing: -0.03em; font-weight: 600;">Knowra</h3>
+              <p style="margin-top: 6px; font-size: 19px; color: rgb(58, 61, 68);">Permission-aware enterprise RAG platform</p>
+            </div>
+            <p style="font-size: 17px; line-height: 1.6; color: rgb(58, 61, 68); text-wrap: pretty;">Turns an organisation's documents into a searchable knowledge base that answers with cited sources, restricted strictly to documents the person asking is authorized to view. Full stack: ingestion, retrieval, chat and admin tooling.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(130px, 100%), 1fr)); gap: 16px; border-top: 1px solid rgb(222, 218, 210); border-bottom: 1px solid rgb(222, 218, 210); padding: 18px 0px;">
+              <div>
+                <p style="font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: rgb(15, 110, 110);">Top 5</p>
+                <p style="margin-top: 4px; font-size: 13px; line-height: 1.4; color: rgb(99, 102, 109);">Right source retrieved in testing</p>
+              </div>
+              <div>
+                <p style="font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: rgb(15, 110, 110);">~20%</p>
+                <p style="margin-top: 4px; font-size: 13px; line-height: 1.4; color: rgb(99, 102, 109);">Fewer hallucinations after re-ranking</p>
+              </div>
+              <div>
+                <p style="font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: rgb(15, 110, 110);">2–5 s</p>
+                <p style="margin-top: 4px; font-size: 13px; line-height: 1.4; color: rgb(99, 102, 109);">Typical time to a cited answer</p>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; padding: 6px 10px; border-radius: 6px; background: rgb(221, 237, 234); color: rgb(11, 82, 82);">FastAPI</span>
+              <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; padding: 6px 10px; border-radius: 6px; background: rgb(221, 237, 234); color: rgb(11, 82, 82);">React/TS</span>
+              <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; padding: 6px 10px; border-radius: 6px; background: rgb(221, 237, 234); color: rgb(11, 82, 82);">PostgreSQL</span>
+              <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; padding: 6px 10px; border-radius: 6px; background: rgb(221, 237, 234); color: rgb(11, 82, 82);">FAISS + BM25</span>
+              <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; padding: 6px 10px; border-radius: 6px; background: rgb(221, 237, 234); color: rgb(11, 82, 82);">Docker Compose</span>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 16px; margin-top: 4px; align-items: center;">
+              <a href="knowra.html" class="arrow" style="font-weight: 600; color: #0F6E6E;">Read case study &amp; watch demo →</a>
+              <a href="https://github.com/Ajeeetsingh/enterprise_knowledge_assistant" target="_blank" rel="noopener" class="arrow">Code on GitHub ↗</a>
+            </div>
+          </div>
+
+          <!-- Flowchart Graphic in Card -->
+          <div data-reveal="right" data-reveal-delay="320" style="flex: 1 1 380px; min-width: 0px; padding: clamp(24px, 3vw, 40px); background: rgb(236, 233, 227); border-left: 1px solid rgb(222, 218, 210); display: flex; flex-direction: column; gap: 6px; justify-content: center;">
+            <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(99, 102, 109); margin-bottom: 10px;">How a question becomes a cited answer</p>
+            <div style="display: flex; flex-direction: column; align-items: stretch;">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 10px; background: rgb(251, 250, 247); border: 1px solid rgb(222, 218, 210);">
+                <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: rgb(15, 110, 110);">01</span>
+                <span style="font-size: 15px; font-weight: 600; color: rgb(22, 24, 29);">Question</span>
+                <span style="margin-left: auto; font-size: 13px; color: rgb(99, 102, 109);">plain English</span>
+              </div>
+              <div class="flow" aria-hidden="true" style="width: 2px; height: 12px; background: rgb(15, 110, 110); margin-left: 26px;"></div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: stretch;">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 10px; background: rgb(251, 250, 247); border: 1px solid rgb(222, 218, 210);">
+                <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: rgb(15, 110, 110);">02</span>
+                <span style="font-size: 15px; font-weight: 600; color: rgb(22, 24, 29);">Intent router</span>
+                <span style="margin-left: auto; font-size: 13px; color: rgb(99, 102, 109);">skip or search</span>
+              </div>
+              <div class="flow" aria-hidden="true" style="width: 2px; height: 12px; background: rgb(15, 110, 110); margin-left: 26px; animation-delay: 0.25s;"></div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: stretch;">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 10px; background: rgb(22, 24, 29); border: 1px solid rgb(22, 24, 29);">
+                <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: rgb(108, 197, 185);">03</span>
+                <span style="font-size: 15px; font-weight: 600; color: rgb(255, 255, 255);">Access filter</span>
+                <span style="margin-left: auto; font-size: 13px; color: rgb(184, 188, 198);">fail-closed RBAC</span>
+              </div>
+              <div class="flow" aria-hidden="true" style="width: 2px; height: 12px; background: rgb(15, 110, 110); margin-left: 26px; animation-delay: 0.5s;"></div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: stretch;">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 10px; background: rgb(251, 250, 247); border: 1px solid rgb(222, 218, 210);">
+                <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: rgb(15, 110, 110);">04</span>
+                <span style="font-size: 15px; font-weight: 600; color: rgb(22, 24, 29);">Hybrid retrieval</span>
+                <span style="margin-left: auto; font-size: 13px; color: rgb(99, 102, 109);">FAISS + BM25 → RRF</span>
+              </div>
+              <div class="flow" aria-hidden="true" style="width: 2px; height: 12px; background: rgb(15, 110, 110); margin-left: 26px; animation-delay: 0.75s;"></div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: stretch;">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 10px; background: rgb(251, 250, 247); border: 1px solid rgb(222, 218, 210);">
+                <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: rgb(15, 110, 110);">05</span>
+                <span style="font-size: 15px; font-weight: 600; color: rgb(22, 24, 29);">Re-rank</span>
+                <span style="margin-left: auto; font-size: 13px; color: rgb(99, 102, 109);">cross-encoder</span>
+              </div>
+              <div class="flow" aria-hidden="true" style="width: 2px; height: 12px; background: rgb(15, 110, 110); margin-left: 26px; animation-delay: 1s;"></div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: stretch;">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 10px; background: rgb(22, 24, 29); border: 1px solid rgb(22, 24, 29);">
+                <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: rgb(108, 197, 185);">06</span>
+                <span style="font-size: 15px; font-weight: 600; color: rgb(255, 255, 255);">Cited answer</span>
+                <span style="margin-left: auto; font-size: 13px; color: rgb(184, 188, 198);">page + passage</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2: Document Intelligence & Project 3: fitness.ai -->
+        <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 24px;">
+          <!-- Document Intelligence -->
+          <article data-reveal="scale" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 18px; padding: clamp(28px, 3.5vw, 40px); display: flex; flex-direction: column; gap: 18px; background: rgb(251, 250, 247);">
+            <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(99, 102, 109);">Professional work · IDA Automation</p>
+            <div>
+              <h3 style="font-size: 28px; letter-spacing: -0.025em; font-weight: 600;">Document Intelligence</h3>
+              <p style="margin-top: 6px; font-size: 17px; color: rgb(58, 61, 68);">Structured data from U.S. real estate records</p>
+            </div>
+            <p style="font-size: 16px; line-height: 1.6; color: rgb(58, 61, 68);">Pipelines that extract, validate and structure fields such as legal land descriptions from mortgage, title and ownership documents, paired with a computer-vision and vision-language pipeline that reads assessor parcel maps.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr)); gap: 16px; border-top: 1px solid rgb(222, 218, 210); border-bottom: 1px solid rgb(222, 218, 210); padding: 18px 0px;">
+              <div>
+                <p style="font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: rgb(15, 110, 110);">100+</p>
+                <p style="margin-top: 4px; font-size: 13px; line-height: 1.4; color: rgb(99, 102, 109);">Documents processed per day</p>
+              </div>
+              <div>
+                <p style="font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: rgb(15, 110, 110);">~80%</p>
+                <p style="margin-top: 4px; font-size: 13px; line-height: 1.4; color: rgb(99, 102, 109);">Less manual processing effort</p>
+              </div>
+              <div>
+                <p style="font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: rgb(15, 110, 110);">~90%</p>
+                <p style="margin-top: 4px; font-size: 13px; line-height: 1.4; color: rgb(99, 102, 109);">Fewer extraction errors</p>
+              </div>
+            </div>
+
+            <ul style="padding: 0px; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.5;">
+              <li style="display: flex; gap: 12px;"><span aria-hidden="true" style="color: rgb(15, 110, 110); font-family: 'Geist Mono', ui-monospace, monospace;">→</span><span>Fine-tuned LLMs: ~15–20% more accurate than a general-purpose LLM baseline</span></li>
+              <li style="display: flex; gap: 12px;"><span aria-hidden="true" style="color: rgb(15, 110, 110); font-family: 'Geist Mono', ui-monospace, monospace;">→</span><span>Classical CV + VLM to detect parcel geometry and compass orientation</span></li>
+              <li style="display: flex; gap: 12px;"><span aria-hidden="true" style="color: rgb(15, 110, 110); font-family: 'Geist Mono', ui-monospace, monospace;">→</span><span>FastAPI microservices on AWS Bedrock, SageMaker, EC2 and S3</span></li>
+            </ul>
+
+            <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: rgb(99, 102, 109); margin-top: auto;">Python · Computer vision · VLMs · RAG · AWS</p>
+            <a href="document-intelligence.html" class="arrow" style="font-size: 16px; font-weight: 600;">Read the case study &amp; interactive demo →</a>
+          </article>
+
+          <!-- fitness.ai -->
+          <article data-reveal="scale" data-reveal-delay="160" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 18px; padding: clamp(28px, 3.5vw, 40px); display: flex; flex-direction: column; gap: 18px; background: rgb(251, 250, 247);">
+            <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(99, 102, 109);">Production backend · HeyBobo · 2025</p>
+            <div>
+              <h3 style="font-size: 28px; letter-spacing: -0.025em; font-weight: 600;">fitness.ai</h3>
+              <p style="margin-top: 6px; font-size: 17px; color: rgb(58, 61, 68);">LLM-driven workout planning backend</p>
+            </div>
+            <p style="font-size: 16px; line-height: 1.6; color: rgb(58, 61, 68);">A production FastAPI backend that generates personalised standard and athlete-specific workout plans, with agentic follow-ups that remember the conversation. I owned the architecture and implementation end to end.</p>
+            <ul style="padding: 0px; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.5;">
+              <li style="display: flex; gap: 12px;"><span aria-hidden="true" style="color: rgb(15, 110, 110); font-family: 'Geist Mono', ui-monospace, monospace;">→</span><span>LangGraph/LangChain agent layer with conversation memory</span></li>
+              <li style="display: flex; gap: 12px;"><span aria-hidden="true" style="color: rgb(15, 110, 110); font-family: 'Geist Mono', ui-monospace, monospace;">→</span><span>Response caching reuses past generations to cut token cost and latency</span></li>
+              <li style="display: flex; gap: 12px;"><span aria-hidden="true" style="color: rgb(15, 110, 110); font-family: 'Geist Mono', ui-monospace, monospace;">→</span><span>Auth and RBAC; pluggable LLMs via Ollama or custom APIs</span></li>
+            </ul>
+            <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: rgb(99, 102, 109); margin-top: auto;">Python · FastAPI · LangGraph · LangChain · Ollama</p>
+            <a href="https://github.com/Ajeeetsingh/fitness_ai" target="_blank" rel="noopener" class="arrow" style="font-size: 16px;">Code on GitHub ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 02: EXPERIENCE -->
+    <section id="experience" style="border-top: 1px solid rgb(222, 218, 210); background: rgb(236, 233, 227);">
+      <div style="max-width: 1200px; margin: 0px auto; padding: clamp(64px, 8vw, 112px) clamp(16px, 4vw, 40px);">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px;">
+          <div>
+            <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #0F6E6E; margin-bottom: 12px; line-height: 1.05;">Experience</h2>
+            <p data-reveal="clip" style="font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.25; color: #16181D;">Where I've built.</p>
+          </div>
+          <a href="Ajeet-Singh-Resume.pdf" target="_blank" rel="noopener" class="arrow" style="font-size: 16px; font-weight: 600;">Full résumé (PDF) ↗</a>
+        </div>
+
+        <div style="margin-top: 48px; display: flex; flex-direction: column;">
+          <!-- IDA Automation -->
+          <div style="border-top: 1px solid rgb(211, 207, 198); padding: 36px 0px; display: flex; flex-wrap: wrap; gap: 16px 48px;">
+            <div data-reveal="left" style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 8px;">
+              <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: rgb(15, 110, 110); font-weight: 600;">Mar 2026 to Present</p>
+              <p style="font-size: 15px; color: rgb(99, 102, 109);">Bengaluru, India</p>
+            </div>
+            <div data-reveal="up" data-reveal-delay="140" style="flex: 999 1 520px; min-width: 0px; display: flex; flex-direction: column; gap: 14px;">
+              <h3 style="font-size: 22px; font-weight: 600; letter-spacing: -0.015em;">AI/ML Engineer · IDA Automation</h3>
+              <ul style="padding-left: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; line-height: 1.55; color: rgb(58, 61, 68);">
+                <li>Design and build production Generative AI document intelligence for U.S. real estate records including mortgage, title, ownership, commercial and residential documents.</li>
+                <li>Built and deployed an AI extraction pipeline processing 100+ documents a day, cutting manual processing effort by ~80%.</li>
+                <li>Fine-tuned LLMs for structured extraction, improving accuracy ~15–20% over a general-purpose LLM baseline and reducing extraction errors by ~90%.</li>
+                <li>Designed a multimodal pipeline for assessor parcel maps, pairing classical computer vision with a vision-language model to detect parcel geometry and compass orientation.</li>
+                <li>Architected FastAPI microservices on AWS (Bedrock, SageMaker, EC2, S3) for ingestion, AI orchestration and retrieval; tuned prompts and context to reduce hallucinations.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- HeyBobo -->
+          <div style="border-top: 1px solid rgb(211, 207, 198); padding: 36px 0px; display: flex; flex-wrap: wrap; gap: 16px 48px;">
+            <div data-reveal="left" style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 8px;">
+              <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: rgb(15, 110, 110); font-weight: 600;">Jul 2025 to Feb 2026</p>
+              <p style="font-size: 15px; color: rgb(99, 102, 109);">Bengaluru, India</p>
+            </div>
+            <div data-reveal="up" data-reveal-delay="140" style="flex: 999 1 520px; min-width: 0px; display: flex; flex-direction: column; gap: 14px;">
+              <h3 style="font-size: 22px; font-weight: 600; letter-spacing: -0.015em;">AI/ML Engineer, Team Lead · HeyBobo</h3>
+              <ul style="padding-left: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; line-height: 1.55; color: rgb(58, 61, 68);">
+                <li>Led a team of 10 AI engineers building a multi-domain assistant for health and education, overseeing architecture decisions, sprint planning and mentoring.</li>
+                <li>Designed multi-agent workflows in LangGraph and LangChain with multi-step reasoning, tool calling, conversational memory and orchestration.</li>
+                <li>Fine-tuned open-source LLMs (LLaMA, Qwen, Falcon) on health and education datasets.</li>
+                <li>Deployed training and inference on AWS SageMaker, Bedrock and S3, served through FastAPI in Docker.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- GL Communications -->
+          <div style="border-top: 1px solid rgb(211, 207, 198); border-bottom: 1px solid rgb(211, 207, 198); padding: 36px 0px; display: flex; flex-wrap: wrap; gap: 16px 48px;">
+            <div data-reveal="left" style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 8px;">
+              <p style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: rgb(15, 110, 110); font-weight: 600;">Sep 2022 to Feb 2025</p>
+              <p style="font-size: 15px; color: rgb(99, 102, 109);">Bengaluru, India</p>
+            </div>
+            <div data-reveal="up" data-reveal-delay="140" style="flex: 999 1 520px; min-width: 0px; display: flex; flex-direction: column; gap: 14px;">
+              <h3 style="font-size: 22px; font-weight: 600; letter-spacing: -0.015em;">Software Engineer · GL Communications</h3>
+              <ul style="padding-left: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; line-height: 1.55; color: rgb(58, 61, 68);">
+                <li>Built regression models forecasting daily revenue for 50+ products from 100K+ historical sales records, producing 7-day forecasts for sales planning.</li>
+                <li>Improved forecast accuracy by ~15% (MAE/RMSE) over a seasonal naive baseline through feature engineering, cross-validation and tuning.</li>
+                <li>Wrote optimised SQL and Python ETL pipelines (Pandas, NumPy) feeding ML models and analytics dashboards.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 03: SKILLS -->
+    <section id="skills" style="border-top: 1px solid rgb(222, 218, 210);">
+      <div style="max-width: 1200px; margin: 0px auto; padding: clamp(64px, 8vw, 112px) clamp(16px, 4vw, 40px);">
+        <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #0F6E6E; margin-bottom: 12px; line-height: 1.05;">Skills</h2>
+        <p data-reveal="clip" style="font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.25; color: #16181D;">The toolkit.</p>
+        
+        <div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px;">
+          <!-- Skill Card 1 -->
+          <div data-reveal="up" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+            <h3 style="font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+              <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: rgb(15, 110, 110); display: inline-block;"></span>
+              <span>Generative AI &amp; agents</span>
+            </h3>
+            <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">LLMs</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">RAG</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Multi-agent systems</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">LangGraph</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">LangChain</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Tool calling</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Fine-tuning</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Multimodal LLMs</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Guardrails</span>
+            </div>
+          </div>
+
+          <!-- Skill Card 2 -->
+          <div data-reveal="up" data-reveal-delay="100" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+            <h3 style="font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+              <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: rgb(15, 110, 110); display: inline-block;"></span>
+              <span>Retrieval &amp; search</span>
+            </h3>
+            <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Hybrid search</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Dense + BM25</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Embeddings</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">FAISS</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Cross-encoder re-ranking</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Reciprocal Rank Fusion</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Semantic chunking</span>
+            </div>
+          </div>
+
+          <!-- Skill Card 3 -->
+          <div data-reveal="up" data-reveal-delay="200" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+            <h3 style="font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+              <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: rgb(15, 110, 110); display: inline-block;"></span>
+              <span>ML, deep learning &amp; vision</span>
+            </h3>
+            <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">PyTorch</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Hugging Face</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Sentence Transformers</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">scikit-learn</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Computer vision</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">NLP</span>
+            </div>
+          </div>
+
+          <!-- Skill Card 4 -->
+          <div data-reveal="up" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+            <h3 style="font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+              <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: rgb(15, 110, 110); display: inline-block;"></span>
+              <span>Models &amp; providers</span>
+            </h3>
+            <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">AWS Bedrock</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">OpenAI</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Gemini</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Groq</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">LLaMA</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Qwen</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Ollama</span>
+            </div>
+          </div>
+
+          <!-- Skill Card 5 -->
+          <div data-reveal="up" data-reveal-delay="100" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+            <h3 style="font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+              <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: rgb(15, 110, 110); display: inline-block;"></span>
+              <span>Backend &amp; APIs</span>
+            </h3>
+            <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Python</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">FastAPI</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">REST APIs</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Microservices</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">JWT auth</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">RBAC</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">React</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">TypeScript</span>
+            </div>
+          </div>
+
+          <!-- Skill Card 6 -->
+          <div data-reveal="up" data-reveal-delay="200" class="lift" style="border: 1px solid rgb(222, 218, 210); border-radius: 14px; background: rgb(251, 250, 247); padding: 24px;">
+            <h3 style="font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+              <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: rgb(15, 110, 110); display: inline-block;"></span>
+              <span>Cloud, data &amp; delivery</span>
+            </h3>
+            <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">AWS SageMaker</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">EC2</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">S3</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Docker</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Docker Compose</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">PostgreSQL</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">SQL</span>
+              <span style="font-size: 13px; padding: 5px 10px; border-radius: 6px; background: rgb(236, 233, 227); color: rgb(58, 61, 68);">Git</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 04: ABOUT (With Real Profile Photo) -->
+    <section id="about" style="border-top: 1px solid rgb(222, 218, 210); background: rgb(236, 233, 227);">
+      <div style="max-width: 1200px; margin: 0px auto; padding: clamp(64px, 8vw, 112px) clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; gap: 40px 64px; align-items: flex-start;">
+        <div data-reveal="left" style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 24px;">
+          <div>
+            <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #0F6E6E; margin-bottom: 12px; line-height: 1.05;">About</h2>
+            <p style="font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.25; color: #16181D; max-width: 14ch;">AI that holds up in production.</p>
+          </div>
+          
+          <!-- Profile Photo Frame -->
+          <div style="width: 100%; max-width: 320px; aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden; border: 1px solid rgb(211, 207, 198); box-shadow: 0 20px 40px -20px rgba(22, 24, 29, 0.25); background: #E3DFD6;">
+            <img src="assets/profile_imag.jpeg" alt="Ajeet Singh - AI/ML Engineer" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+
+        <div data-reveal="up" data-reveal-delay="150" style="flex: 999 1 560px; min-width: 0px; display: flex; flex-direction: column; gap: 20px; font-size: 18px; line-height: 1.65; color: rgb(58, 61, 68);">
+          <p>I'm an AI/ML engineer who owns systems end to end, spanning architecture, backend engineering, model fine-tuning and cloud deployment. I started in software engineering, building forecasting models and data pipelines, and moved into Generative AI, where I've led a team of ten and shipped agentic and document-intelligence systems.</p>
+          <p>The thread through my work is making AI output something you can check. At IDA Automation, that means turning scanned property records and parcel maps into structured, validated data. Knowra applies the same idea to company knowledge: every answer cites its source, and access rules are enforced before the model sees anything.</p>
+          
+          <div style="margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 24px; font-size: 15px; line-height: 1.55;">
+            <div data-reveal="scale" data-reveal-delay="250" style="border-top: 2px solid rgb(15, 110, 110); padding-top: 14px;">
+              <p style="font-weight: 600; color: rgb(22, 24, 29);">Traceable by design</p>
+              <p style="margin-top: 6px;">Outputs point back to the page, region or passage they came from.</p>
+            </div>
+            <div data-reveal="scale" data-reveal-delay="370" style="border-top: 2px solid rgb(15, 110, 110); padding-top: 14px;">
+              <p style="font-weight: 600; color: rgb(22, 24, 29);">Production over demos</p>
+              <p style="margin-top: 6px;">Validation, caching, auth and automated tests: the essential layers that make AI dependable.</p>
+            </div>
+            <div data-reveal="scale" data-reveal-delay="490" style="border-top: 2px solid rgb(15, 110, 110); padding-top: 14px;">
+              <p style="font-weight: 600; color: rgb(22, 24, 29);">Right tool first</p>
+              <p style="margin-top: 6px;">Classical methods where they win; models where they earn their place.</p>
+            </div>
+          </div>
+
+          <p style="margin-top: 12px; font-size: 15px; color: rgb(99, 102, 109);">B.E. Computer Science, Visvesvaraya Technological University (2018–2022) · English, Hindi</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 05: CONTACT -->
+    <section id="contact" style="background: rgb(22, 24, 29); color: rgb(232, 233, 236); position: relative; overflow: hidden;">
+      <div style="max-width: 1200px; margin: 0px auto; padding: clamp(72px, 9vw, 128px) clamp(16px, 4vw, 40px) 48px; position: relative;">
+        <h2 style="font-size: clamp(38px, 4.8vw, 56px); font-weight: 700; letter-spacing: -0.035em; color: #6CC5B9; margin-bottom: 12px; line-height: 1.05;">Contact</h2>
+        <p data-reveal="clip" style="font-size: clamp(32px, 4.4vw, 64px); letter-spacing: -0.03em; font-weight: 600; line-height: 1.08; color: rgb(255, 255, 255); max-width: 16ch;">Let's build something useful.</p>
+        <p data-reveal="up" data-reveal-delay="200" style="margin-top: 24px; max-width: 56ch; font-size: 19px; line-height: 1.55; color: rgb(184, 188, 198);">Open to AI/ML engineering roles and selective consulting projects across enterprise RAG, intelligent agents, and document automation.</p>
+        
+        <div data-reveal="up" data-reveal-delay="320" style="display: flex; align-items: center; gap: 16px; margin-top: 40px; flex-wrap: wrap;">
+          <a href="mailto:ajeetsingh7632@gmail.com" class="onDark" style="font-size: clamp(22px, 3vw, 36px); font-weight: 500; letter-spacing: -0.02em; border-bottom: 2px solid rgb(47, 165, 154); padding-bottom: 4px;">ajeetsingh7632@gmail.com</a>
+          <button type="button" class="copy-btn" data-copy="ajeetsingh7632@gmail.com" aria-label="Copy email address to clipboard">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copy email</span>
+          </button>
+        </div>
+
+        <div data-reveal="up" data-reveal-delay="440" style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px;">
+          <a href="https://www.linkedin.com/in/ajeet-singh-66810616a" target="_blank" rel="noopener" class="onDark" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0px 22px; border: 1px solid rgb(58, 63, 72); border-radius: 999px; font-weight: 500;">LinkedIn ↗</a>
+          <a href="https://github.com/Ajeeetsingh" target="_blank" rel="noopener" class="onDark" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0px 22px; border: 1px solid rgb(58, 63, 72); border-radius: 999px; font-weight: 500;">GitHub ↗</a>
+          <a href="Ajeet-Singh-Resume.pdf" target="_blank" rel="noopener" class="onDark" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0px 22px; border: 1px solid rgb(58, 63, 72); border-radius: 999px; font-weight: 500;">Résumé (PDF) ↗</a>
+        </div>
+
+        <footer style="margin-top: clamp(72px, 9vw, 120px); border-top: 1px solid rgb(43, 47, 55); padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: rgb(138, 144, 156);">
+          <p>© 2026 Ajeet Singh · Bengaluru, India</p>
+          <p style="font-family: 'Geist Mono', ui-monospace, monospace;">AI/ML Engineer</p>
+        </footer>
+      </div>
+    </section>
+  </main>
+</div>
+</div>
+
+<!-- Toast Notification Container -->
+<div class="toast-container" id="toastContainer" role="status" aria-live="polite">
+  <div class="toast-body">
+    <span class="toast-check">✓</span>
+    <span id="toastMessage">Copied to clipboard!</span>
+  </div>
+</div>
+
+<!-- SCRIPTS: SCROLL, COUNTERS, ROLE DEMO, COPY TOAST -->
+<script>
+// 1. Progress Bar, Counters & Scroll Reveal
+(function () {
+  var bar = document.querySelector('[data-progress]');
+  function onScroll() {
+    if (!bar) return;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0) + ')';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+
+  var counters = [].slice.call(document.querySelectorAll('[data-count]'));
+  var cio = new IntersectionObserver(function (es) {
+    es.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var el = en.target, target = parseFloat(el.getAttribute('data-count')) || 0, t0 = performance.now();
+      cio.unobserve(el);
+      (function step(now) {
+        var p = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = p < 1 ? String(Math.round(target * e)) : String(target);
+        if (p < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }, { threshold: 0.6 });
+  counters.forEach(function (c) { cio.observe(c); });
+
+  var nodes = [].slice.call(document.querySelectorAll('[data-reveal]'));
+  var start = { up: 'translateY(32px)', left: 'translateX(-40px)', right: 'translateX(40px)', scale: 'translateY(20px) scale(0.96)', fade: 'none' };
+  function delayOf(n) { return parseInt(n.getAttribute('data-reveal-delay') || '0', 10) || 0; }
+  function reset(n) { n.style.transition = ''; n.style.opacity = ''; n.style.transform = ''; n.style.clipPath = ''; }
+  function show(n) {
+    if (n.__shown) return; n.__shown = true;
+    n.style.opacity = '1'; n.style.transform = 'none'; n.style.clipPath = 'inset(0 0 0 0)';
+    setTimeout(function () { reset(n); }, delayOf(n) + 1200);
+  }
+  nodes.forEach(function (n) {
+    var k = n.getAttribute('data-reveal') || 'up';
+    if (k === 'clip') n.style.clipPath = 'inset(0 100% 0 0)';
+    else { n.style.opacity = '0'; n.style.transform = start[k] || start.up; }
+  });
+  void document.body.offsetHeight;
+  nodes.forEach(function (n) {
+    var d = delayOf(n) + 'ms';
+    n.style.transition = 'opacity .7s ease ' + d + ', transform .9s cubic-bezier(.16,1,.3,1) ' + d + ', clip-path 1s cubic-bezier(.77,0,.18,1) ' + d;
+  });
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (en) { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } });
+  }, { threshold: 0.05, rootMargin: '120px 0px 120px 0px' });
+  nodes.forEach(function (n) { io.observe(n); });
+})();
+
+// 2. Interactive Role RAG Demo
+(function () {
+  var roles = [
+    { id: 'employee', name: 'Employee', answer: "I can't answer that from documents you're authorised to see. Contractor spend sits in Finance records outside your access, so I won't guess.", sources: [] },
+    { id: 'hr', name: 'HR', answer: 'Q3 contractor headcount was 14 across three teams. Cost figures are in Finance documents, which stay locked for this role.', sources: ['Q3 Headcount Report.xlsx · sheet 2'] },
+    { id: 'finance', name: 'Finance', answer: 'Q3 contractor spend was $412,800, about 6% above Q2, driven by two engineering contracts extended through September.', sources: ['FY26 Contractor Ledger.xlsx · row 118', 'Q3 Close Summary.pdf · p.4'] },
+    { id: 'admin', name: 'Admin', answer: 'Q3 contractor spend was $412,800. The figure is visible to Finance and Admin roles only; the access audit lists every active grant.', sources: ['FY26 Contractor Ledger.xlsx · row 118', 'Access audit · active grants'] }
+  ];
+  var group = document.querySelector('[aria-label="Ask as role"]');
+  if (!group) return;
+  var box = group.nextElementSibling;
+  var buttons = [].slice.call(group.querySelectorAll('button'));
+  var who = box.querySelector('p span');
+  var answer = box.querySelector('p.fade');
+  var tail = document.createElement('div');
+  while (answer.nextSibling) answer.parentNode.removeChild(answer.nextSibling);
+  answer.parentNode.appendChild(tail);
+
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function select(id) {
+    var r = roles.filter(function (x) { return x.id === id; })[0];
+    buttons.forEach(function (b, i) {
+      var on = roles[i].id === id;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.style.background = on ? '#6CC5B9' : 'transparent';
+      b.style.borderColor = on ? '#6CC5B9' : '#3A3F48';
+      b.style.color = on ? '#0C1F1D' : '#D5D8DE';
+    });
+    who.textContent = r.name;
+    answer.textContent = r.answer;
+    answer.classList.remove('fade'); void answer.offsetWidth; answer.classList.add('fade');
+    if (r.sources.length) {
+      tail.innerHTML = '<div style="display:flex;flex-direction:column;gap:8px">' + r.sources.map(function (s, i) {
+        return '<div style="display:flex;gap:10px;align-items:center;font-family:\'Geist Mono\',ui-monospace,monospace;font-size:13px;color:#9FD8D0">' +
+          '<span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;background:#11403D;color:#9FD8D0;font-size:12px">' + (i + 1) + '</span><span>' + esc(s) + '</span></div>';
+      }).join('') + '</div>';
+    } else {
+      tail.innerHTML = '<p style="font-family:\'Geist Mono\',ui-monospace,monospace;font-size:13px;color:#F2B872">No authorized source for this role; no claim made.</p>';
+    }
+  }
+  buttons.forEach(function (b, i) { b.addEventListener('click', function () { select(roles[i].id); }); });
+  select('finance');
+})();
+
+// 3. Copy Email to Clipboard & Toast System
+(function () {
+  var toast = document.getElementById('toastContainer');
+  var toastMsg = document.getElementById('toastMessage');
+  var timer = null;
+
+  function showToast(msg) {
+    if (toastMsg) toastMsg.textContent = msg;
+    if (toast) {
+      toast.classList.add('show');
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        toast.classList.remove('show');
+      }, 2600);
+    }
+  }
+
+  var copyBtns = [].slice.call(document.querySelectorAll('[data-copy]'));
+  copyBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      if (!text) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          showToast(text + ' copied to clipboard!');
+        }).catch(function () {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    });
+  });
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      showToast(text + ' copied to clipboard!');
+    } catch (e) {
+      showToast('Could not copy automatically');
+    }
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+</body>
+</html>
